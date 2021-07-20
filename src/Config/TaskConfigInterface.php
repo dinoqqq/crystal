@@ -14,8 +14,8 @@ interface TaskConfigInterface {
     public function setTimeout(int $seconds): void;
     public function getTimeout(): int;
 
-    public function setEntityUid(string $entityUid): void;
-    public function getEntityUid(): string;
+    public function setEntityUid(?string $entityUid): void;
+    public function getEntityUid(): ?string;
 
     public function setRangeStrategy(?string $rangeStrategyClassName): void;
     public function getRangeStrategy(): ?RangeStrategyInterface;

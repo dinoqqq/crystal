@@ -55,12 +55,14 @@ class TaskConfig implements TaskConfigInterface
         return $this->_class;
     }
 
-    public function setEntityUid(string $entityUid): void
+    public function setEntityUid(?string $entityUid): void
     {
-        $this->_entityUid = $entityUid;
+        if (!empty($entityUid)) {
+            $this->_entityUid = $entityUid;
+        }
     }
 
-    public function getEntityUid(): string
+    public function getEntityUid(): ?string
     {
         return $this->_entityUid;
     }
@@ -97,7 +99,7 @@ class TaskConfig implements TaskConfigInterface
 
     public function setRangeStrategy(?string $rangeStrategyClassName, array $data = []): void
     {
-        if ($rangeStrategyClassName) {
+        if (!empty($rangeStrategyClassName)) {
             $this->_rangeStrategy = new $rangeStrategyClassName($data);
         }
     }
