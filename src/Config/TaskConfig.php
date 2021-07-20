@@ -95,12 +95,14 @@ class TaskConfig implements TaskConfigInterface
         return $this->_timeout;
     }
 
-    public function setRangeStrategy(string $rangeStrategyClassName, array $data = []): void
+    public function setRangeStrategy(?string $rangeStrategyClassName, array $data = []): void
     {
-        $this->_rangeStrategy = new $rangeStrategyClassName($data);
+        if ($rangeStrategyClassName) {
+            $this->_rangeStrategy = new $rangeStrategyClassName($data);
+        }
     }
 
-    public function getRangeStrategy(): RangeStrategyInterface
+    public function getRangeStrategy(): ?RangeStrategyInterface
     {
         return $this->_rangeStrategy;
     }

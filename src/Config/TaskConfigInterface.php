@@ -17,8 +17,8 @@ interface TaskConfigInterface {
     public function setEntityUid(string $entityUid): void;
     public function getEntityUid(): string;
 
-    public function setRangeStrategy(string $rangeStrategyClassName): void;
-    public function getRangeStrategy(): RangeStrategyInterface;
+    public function setRangeStrategy(?string $rangeStrategyClassName): void;
+    public function getRangeStrategy(): ?RangeStrategyInterface;
 
     public function setDependOn(?string $dependOn): void;
     public function getDependOn(): ?string;
