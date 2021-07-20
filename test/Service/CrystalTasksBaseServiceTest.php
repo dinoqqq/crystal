@@ -991,4 +991,87 @@ class CrystalTasksBaseServiceTest extends BaseTestApp
         $this->assertNull($crystalTaskDb4);
 
     }
+    /**
+     * Should work with empty results and return null
+     */
+    public function testGetNextToBeExecutedCrystalTasksWithPriorityStrategyWithForUpdateEmptyResult()
+    {
+        $this->truncate(['crystal_tasks']);
+        $taskClassesAndGrantedExecutionSlots = [
+            [
+                'class' => 'Foo1',
+                'grantedExecutionSlots' => 4,
+            ],
+        ];
+
+        $result = $this->_crystalTasksBaseService->getNextToBeExecutedCrystalTasksWithPriorityStrategyWithForUpdate(
+            $taskClassesAndGrantedExecutionSlots
+        );
+
+        $this->assertEquals([], $result);
+    }
+
+    /**
+     * Should return only the ones that matter
+     */
+    public function testGetNextToBeExecutedCrystalTasksWithPriorityStrategyWithForUpdateFullResult()
+    {
+        $this->truncate(['crystal_tasks']);
+        $data1 = [
+            'class' => 'Task1',
+            'range' => 1,
+        ];
+
+        $data2 = [
+            'class' => 'Task1',
+            'range' => 2,
+        ];
+
+        $data3 = [
+            'class' => 'Task2',
+            'range' => 1,
+        ];
+
+        $data4 = [
+            'class' => 'Task2',
+            'range' => 2,
+        ];
+
+        $data5 = [
+            'class' => 'Task3',
+            'range' => 1,
+        ];
+
+        $this->_fixtureHelper->setupCrystalTask($data1);
+        $this->_fixtureHelper->setupCrystalTask($data2);
+        $this->_fixtureHelper->setupCrystalTask($data3);
+        $this->_fixtureHelper->setupCrystalTask($data4);
+        $this->_fixtureHelper->setupCrystalTask($data5);
+
+        $taskClassesAndGrantedExecutionSlots = [
+            [
+                'class' => 'Task1',
+                'grantedExecutionSlots' => 1,
+            ],
+            [
+                'class' => 'Task2',
+                'grantedExecutionSlots' => 3,
+            ],
+            [
+                'class' => 'Task3',
+                'grantedExecutionSlots' => 1,
+            ],
+        ];
+
+        $crystalTasks = $this->_crystalTasksBaseService->getNextToBeExecutedCrystalTasksWithPriorityStrategyWithForUpdate(
+            $taskClassesAndGrantedExecutionSlots
+        );
+
+        $this->assertCount(4, $crystalTasks);
+        $this->assertEquals('Task1', $crystalTasks[0]->class);
+        $this->assertEquals('Task2', $crystalTasks[1]->class);
+        $this->assertEquals('Task2', $crystalTasks[2]->class);
+        $this->assertEquals('Task3', $crystalTasks[3]->class);
+    }
 }
+

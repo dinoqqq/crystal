@@ -117,7 +117,21 @@ class CrystalTasksTable extends AbstractTable
     public function getNextToBeExecutedCrystalTasksWithPriorityStrategyWithForUpdate(array $taskClassesAndGrantedExecutionSlots): array
     {
         $query = $this->buildSqlQueryGetNextToBeExecutedCrystalTasksWithPriorityStrategyWithForUpdate($taskClassesAndGrantedExecutionSlots);
+        $crystalTasks = $this->_database->query($query)->fetchAll(PDO::FETCH_CLASS, CrystalTask::class);
+
+        $ids = array_column($crystalTasks, 'id');
+
+        $where1 = $this->getWhereClauseStateCrystalTaskNew();
+        $where2 = ' (<id> IN (' . implode(',', $ids) . ')) ';
+        $where = '(' . $where1 . ') AND (' . $where2 . ')';
+
+        $query = 'SELECT ' . $this->escapeTableColumns(self::TABLE_COLUMNS)
+            . ' FROM <' . self::TABLE_NAME . '>'
+            . ' WHERE ' . $where
+            . ' FOR UPDATE';
+
         return $this->_database->query($query)->fetchAll(PDO::FETCH_CLASS, CrystalTask::class);
+        
     }
 
     public function countNextToBeExecutedCrystalTasks(array $taskClasses): array
@@ -322,8 +336,6 @@ class CrystalTasksTable extends AbstractTable
 
     /**
      * Build the SQL query to find the next tasks for this strategy
-     *
-     * TODO: this query locks almost all entries in the table
      */
     private function buildSqlQueryGetNextToBeExecutedCrystalTasksWithPriorityStrategyWithForUpdate($taskClassesAndGrantedExecutionSlots): string
     {
@@ -336,8 +348,7 @@ class CrystalTasksTable extends AbstractTable
             $wheres[] = 'SELECT ' . $uniqid . '.* FROM (
                     SELECT * FROM `crystal_tasks` WHERE ' . $this->getWhereClauseStateCrystalTaskNew()
                 . ' AND `class` = ' . $classEscaped . ' ORDER BY `date_created` ASC LIMIT ' . $normalizedCountEscaped
-                . ' FOR UPDATE'
-                . ') as ' . $uniqid . ' FOR UPDATE';
+                . ') as ' . $uniqid;
         }
 
         return implode($wheres, ' UNION ALL ');
