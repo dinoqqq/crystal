@@ -1073,5 +1073,21 @@ class CrystalTasksBaseServiceTest extends BaseTestApp
         $this->assertEquals('Task2', $crystalTasks[2]->class);
         $this->assertEquals('Task3', $crystalTasks[3]->class);
     }
+
+    public function testGetUniqueCrystalTaskWithForUpdateWithNullValues()
+    {
+        $this->truncate(['crystal_tasks']);
+        $data1 = [
+            'class' => 'Some\Task1',
+            'entity_uid' => null,
+            'range' => '',
+        ];
+        $crystalTask = $this->_fixtureHelper->setupCrystalTask($data1);
+
+        $result = $this->_crystalTasksBaseService->getUniqueCrystalTaskWithForUpdate($crystalTask);
+        $this->assertEquals(null, $crystalTask->entity_uid);
+        $this->assertEquals('', $crystalTask->range);
+        $this->assertEquals($result, $crystalTask);
+    }
 }
 

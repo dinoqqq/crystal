@@ -287,6 +287,14 @@ class CrystalTasksTable extends AbstractTable
         );
 
         foreach ($duplicateColumnsAndValues as $duplicateColumn => $value) {
+            // HOTFIX
+            if (is_null($value)) {
+                $where[] = '`' . $duplicateColumn . '`'
+                    . ' IS NULL';
+
+                continue;
+            }
+
             $where[] = '`' . $duplicateColumn . '`'
                 . '='
                 . $this->_database->quote($value);
