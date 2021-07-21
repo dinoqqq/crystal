@@ -158,9 +158,13 @@ class ExecuteHeartbeat implements HeartbeatInterface
 
             $idString  = ' --id=' . escapeshellarg($crystalTask->id);
             $classString  = ' --class=' . escapeshellarg($crystalTask->class);
-            $rangeString  = ' --range=' . escapeshellarg($crystalTask->range);
+            $rangeString  = '';
             $timeoutString  = ' --timeout=' . escapeshellarg($crystalTask->timeout);
             $cooldownString  = ' --cooldown=' . escapeshellarg($crystalTask->cooldown);
+
+            if (!empty($crystalTask->range)) {
+                $rangeString  = ' --range=' . escapeshellarg($crystalTask->range);
+            }
 
             // Redirect only stdOut (not stdErr) + background job
             $outputRedirect = ' 1>/dev/null &';
