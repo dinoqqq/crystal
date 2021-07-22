@@ -248,7 +248,7 @@ class Executor implements ExecutorInterface
      */
     private function crystalTaskExecuteWriteError(): void
     {
-        throw new Exception('CRYSTAL-0001: timeout + cooldown reached for crystalTask with id "'
+        throw new Exception('CRYSTAL-0022: timeout + cooldown reached for crystalTask with id "'
             . $this->_crystalTaskId . '", this should never happen, investigate');
     }
 

@@ -124,7 +124,7 @@ class ExecuteHeartbeat implements HeartbeatInterface
             }
         } catch (Exception $e) {
             Crystal::$logger->error(
-                'CRYSTAL-0007: ProcessCrystalTasks failed',
+                'CRYSTAL-0002: ProcessCrystalTasks failed',
                 [
                     'errorMessage' => $e->getMessage(),
                     'trace' => $e->getTraceAsString()

@@ -41,7 +41,7 @@ class CrystalTasksQueueService
             $this->_crystalTasksBaseService->rollbackTransaction();
             throw $e;
         } catch (Exception $e) {
-            Crystal::$logger->error('CRYSTAL-0015: saveAllForQueueHeartbeat failed to save', [
+            Crystal::$logger->error('CRYSTAL-0004: saveAllForQueueHeartbeat failed to save', [
                 'queue' => $queue,
                 'errorMessage' => $e->getMessage(),
             ]);
@@ -99,7 +99,7 @@ class CrystalTasksQueueService
                         'stateChangeStrategy' => get_class($stateChangeStrategy),
                     ];
 
-                    Crystal::$logger->error('CRYSTAL-0019: ' . $e->getMessage(), $data);
+                    Crystal::$logger->error('CRYSTAL-0021: ' . $e->getMessage(), $data);
                 }
 
                 continue;

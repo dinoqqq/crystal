@@ -225,7 +225,7 @@ class CrystalTasksBaseService
                 $data['crystalTaskExisting'] = $crystalTaskExisting;
             }
 
-            Crystal::$logger->error('CRYSTAL-0010: ' . $e->getMessage(), $data);
+            Crystal::$logger->error('CRYSTAL-0003: ' . $e->getMessage(), $data);
 
             $this->rollbackTransaction();
             return false;
