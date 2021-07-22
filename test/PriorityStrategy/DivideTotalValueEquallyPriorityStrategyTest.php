@@ -1384,7 +1384,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
      * @throws ReflectionException
      * @throws Exception
      */
-    public function testEnsureMinimumOneGrantedExecutionSlotsShouldWorkWithNoZeros()
+    public function testRedistributeHighestGrantedExecutionSlotsShouldWorkWithNoZeros()
     {
         $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
 
@@ -1410,7 +1410,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
      * @throws ReflectionException
      * @throws Exception
      */
-    public function testEnsureMinimumOneGrantedExecutionSlotsShouldWorkWithNoZeros2()
+    public function testRedistributeHighestGrantedExecutionSlotsShouldWorkWithNoZeros2()
     {
         $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
 
@@ -1440,7 +1440,37 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
      * @throws ReflectionException
      * @throws Exception
      */
-    public function testEnsureMinimumOneGrantedExecutionSlotsShouldWorkWithMultiple()
+    public function testRedistributeHighestGrantedExecutionSlotsShouldWorkWithFloatAndInt()
+    {
+        $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
+
+        $taskClassesAndPriority = [
+            [
+                'grantedExecutionSlots' => 2.0
+            ],
+            [
+                'grantedExecutionSlots' => 2
+            ],
+        ];
+
+        $result = $this->invokeMethod(
+            $divideTotalValueEquallyPriorityStrategy,
+            'redistributeHighestGrantedExecutionSlots',
+            [
+                $taskClassesAndPriority,
+                1
+            ]
+        );
+
+        $this->assertEquals(2, $result[0]['grantedExecutionSlots']);
+        $this->assertEquals(1, $result[1]['grantedExecutionSlots']);
+    }
+
+    /**
+     * @throws ReflectionException
+     * @throws Exception
+     */
+    public function testRedistributeHighestGrantedExecutionSlotsShouldWorkWithMultiple()
     {
         $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
 
@@ -1490,7 +1520,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
      * @throws ReflectionException
      * @throws Exception
      */
-    public function testEnsureMinimumOneGrantedExecutionSlotsShouldWorkWithMultipleMore()
+    public function testRedistributeHighestGrantedExecutionSlotsShouldWorkWithMultipleMore()
     {
         $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
 
@@ -1556,7 +1586,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
      * @throws ReflectionException
      * @throws Exception
      */
-    public function testEnsureMinimumOneGrantedExecutionSlotsShouldWorkWithMultiple2()
+    public function testRedistributeHighestGrantedExecutionSlotsShouldWorkWithMultiple2()
     {
         $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
 
@@ -1614,7 +1644,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
      * @throws ReflectionException
      * @throws Exception
      */
-    public function testEnsureMinimumOneGrantedExecutionSlotsShouldWorkWithOnlyTwoAndOne()
+    public function testRedistributeHighestGrantedExecutionSlotsShouldWorkWithOnlyTwoAndOne()
     {
         $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
 
@@ -1652,7 +1682,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
      * @throws ReflectionException
      * @throws Exception
      */
-    public function testEnsureMinimumOneGrantedExecutionSlotsShouldWorkWithOnlyNineAndOne()
+    public function testRedistributeHighestGrantedExecutionSlotsShouldWorkWithOnlyNineAndOne()
     {
         $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
 
@@ -1690,7 +1720,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
      * @throws ReflectionException
      * @throws Exception
      */
-    public function testEnsureMinimumOneGrantedExecutionSlotsShouldWorkWithOnlyOne()
+    public function testRedistributeHighestGrantedExecutionSlotsShouldWorkWithOnlyOne()
     {
         $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
 
@@ -1720,7 +1750,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
      * @throws ReflectionException
      * @throws Exception
      */
-    public function testEnsureMinimumOneGrantedExecutionSlotsShouldWorkWithTenWithRandomOrderWithInt()
+    public function testRedistributeHighestGrantedExecutionSlotsShouldWorkWithTenWithRandomOrderWithInt()
     {
         $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
 
@@ -1782,7 +1812,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
      * @throws ReflectionException
      * @throws Exception
      */
-    public function testEnsureMinimumOneGrantedExecutionSlotsShouldWorkWithTenWithRandomOrderWithFloats()
+    public function testRedistributeHighestGrantedExecutionSlotsShouldWorkWithTenWithRandomOrderWithFloats()
     {
         $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
 
@@ -1839,4 +1869,60 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
         $this->assertEquals(0, $result[8]['grantedExecutionSlots']);
         $this->assertEquals(0, $result[9]['grantedExecutionSlots']);
     }
+
+    /**
+     * @throws ReflectionException
+     * @throws Exception
+     */
+    public function testSortByGrantedExecutionSlotsHighToLowWithFloatAndInt()
+    {
+        $divideTotalValueEquallyPriorityStrategy = $this->createDivideTotalValueEquallyPriorityStrategy();
+
+        $taskClassesAndPriority = [
+            [
+                'grantedExecutionSlots' => '',
+            ],
+            [
+                'grantedExecutionSlots' => 2
+            ],
+            [
+                'grantedExecutionSlots' => 2.0
+            ],
+            [
+                'grantedExecutionSlots' => 2.9999990
+            ],
+            [
+                'grantedExecutionSlots' => 0.9999999
+            ],
+            [
+                'grantedExecutionSlots' => null,
+            ],
+            [
+                'grantedExecutionSlots' => [],
+            ],
+            [
+                'grantedExecutionSlots' => 0.0000001
+            ],
+        ];
+
+        $result = $this->invokeMethod(
+            $divideTotalValueEquallyPriorityStrategy,
+            'sortByGrantedExecutionSlotsHighToLow',
+            [
+                $taskClassesAndPriority,
+                1
+            ]
+        );
+
+        $this->assertSame([], $result[0]['grantedExecutionSlots']);
+        $this->assertSame(2.9999990, $result[1]['grantedExecutionSlots']);
+        $this->assertSame(2.0, $result[2]['grantedExecutionSlots']);
+        $this->assertSame(2, $result[3]['grantedExecutionSlots']);
+        $this->assertSame(0.9999999, $result[4]['grantedExecutionSlots']);
+        $this->assertSame(0.0000001, $result[5]['grantedExecutionSlots']);
+        $this->assertSame(null, $result[6]['grantedExecutionSlots']);
+        $this->assertSame('', $result[7]['grantedExecutionSlots']);
+    }
+
+
 }

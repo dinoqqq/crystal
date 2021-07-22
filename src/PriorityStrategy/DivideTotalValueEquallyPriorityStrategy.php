@@ -555,7 +555,7 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
     private function equalsPreviousGrantedExecutionSlot(array $taskClassesAndPriority, int $index): bool
     {
         return isset($taskClassesAndPriority[$index-1])
-            && $taskClassesAndPriority[$index] === $taskClassesAndPriority[$index-1];
+            && (int)$taskClassesAndPriority[$index] === (int)$taskClassesAndPriority[$index-1];
     }
 
     private function isFirstGrantedExecutionSlot(int $index): bool
