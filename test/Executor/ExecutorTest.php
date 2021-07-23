@@ -34,6 +34,7 @@ class ExecutorTest extends BaseTestApp
         $this->_testHandler = new TestHandler();
         $logger = new Logger('', [$this->_testHandler]);
         $crystal = new Crystal($config, $logger);
+        $crystal->start();
 
         $this->_executorFactory = $crystal->getExecutorFactory();
 

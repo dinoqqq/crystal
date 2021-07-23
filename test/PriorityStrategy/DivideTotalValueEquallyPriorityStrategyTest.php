@@ -35,6 +35,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
         $testHandler = new TestHandler();
         $logger = new Logger('', [$testHandler]);
         $crystal = new Crystal($config, $logger);
+        $crystal->start();
 
         $this->_crystalTasksBaseService = $crystal->getCrystalTasksBaseService();
         $this->_fixtureHelper = new FixtureHelper;

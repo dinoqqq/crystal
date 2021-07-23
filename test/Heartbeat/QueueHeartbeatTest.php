@@ -45,6 +45,7 @@ class QueueHeartbeatTest extends BaseTestApp
         $testHandler = new TestHandler();
         $logger = new Logger('', [$testHandler]);
         $crystal = new Crystal($config, $logger);
+        $crystal->start();
 
         $this->_crystalTasksBaseService = $crystal->getCrystalTasksBaseService();
         $this->_crystalTasksTable = $crystal->getCrystalTasksTable();

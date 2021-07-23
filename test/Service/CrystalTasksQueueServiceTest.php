@@ -35,6 +35,7 @@ class CrystalTasksQueueServiceTest extends BaseTestApp
         $testHandler = new TestHandler();
         $logger = new Logger('', [$testHandler]);
         $crystal = new Crystal($config, $logger);
+        $crystal->start();
 
         $this->_crystalTasksQueueService = $crystal->getCrystalTasksQueueService();
         $this->_crystalTasksTable = $crystal->getCrystalTasksTable();

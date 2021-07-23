@@ -37,6 +37,7 @@ class RescheduleHeartbeatTest extends BaseTestApp
         $this->_testHandler = new TestHandler();
         $logger = new Logger('', [$this->_testHandler]);
         $crystal = new Crystal($config, $logger);
+        $crystal->start();
 
         $crystalTasksBaseService = $crystal->getCrystalTasksBaseService();
         $this->_crystalTasksTable = $crystal->getCrystalTasksTable();

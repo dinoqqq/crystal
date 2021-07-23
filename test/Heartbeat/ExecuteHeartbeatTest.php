@@ -43,6 +43,7 @@ class ExecuteHeartbeatTest extends BaseTestApp
         $testHandler = new TestHandler();
         $logger = new Logger('', [$testHandler]);
         $this->_crystal = new Crystal($config, $logger);
+        $this->_crystal->start();
 
         $this->_crystalTasksBaseService = $this->_crystal->getCrystalTasksBaseService();
         $this->_crystalTasksTable = $this->_crystal->getCrystalTasksTable();
