@@ -17,7 +17,7 @@ Crystal is a queue worker optimized for recurring tasks that need to be processe
 
 ### Install via Composer
 
-`composer install dinoqqq/crystal`
+`composer require dinoqqq/crystal`
 
 ## Running tests
 
