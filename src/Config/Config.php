@@ -21,7 +21,6 @@ class Config implements ConfigInterface
      */
     public function __construct(array $config)
     {
-        $this->validate($config);
         $this->_config = $config;
     }
 

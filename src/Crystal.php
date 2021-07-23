@@ -24,7 +24,6 @@ use Psr\Log\LoggerInterface;
 class Crystal
 {
     private $_container;
-    private $_config;
     public static $logger;
 
     /**
@@ -33,16 +32,15 @@ class Crystal
     public function __construct($config, LoggerInterface $logger = null)
     {
         self::$logger = $logger;
-        $this->_config = $config;
+        $this->_container = new Container($config);
     }
 
+    /**
+     * @throws Exception
+     */
     public function start()
     {
-        if (!isset($this->_config)) {
-            throw new Exception('First set the config via the constructor, before calling start');
-        }
-
-        $this->_container = new Container($this->_config);
+        $this->_container->get(Config::class)->validate();
     }
 
     public function getConfig(): ConfigInterface
