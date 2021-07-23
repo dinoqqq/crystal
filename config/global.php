@@ -13,21 +13,21 @@ use Crystal\Test\Mock\Task\SuccessTask;
 use Crystal\Test\Mock\Task\ThirtySecondsTask;
 
 return [
-    // Total number of tasks to be executed
+    // The php file, that is gonna run the task
     'applicationPhpFile' => '/foo/bar.php',
-    // Total number of tasks to be executed
+    // Total number of tasks to be executed simultaneously
     'maxExecutionSlots' => 10,
-    // Heartbeat tempo
+    // Heartbeat tempo, of queueing/executing/rescheduling new tasks
     'sleepTimeSeconds' => 5,
-    // Runtime of heartbeat process
+    // Heartbeat running time, of queueing/executing/rescheduling new tasks
     'runTimeSeconds' => 60,
     // After this number of error tries we set the state to ERROR, no further processing
     'maxErrorTries' => 5,
     // Prioritize equally
     'priorityStrategy' => DivideTotalValueEquallyPriorityStrategy::class,
-    'enable' => true,
+    // A process consists of multiple tasks and tasks can have dependencies
     'mainProcesses' => [
-        [
+        'mainProcess1' => [
             'name' => 'DependentOneTask',
             'tasks' => [
                 [
@@ -36,7 +36,7 @@ return [
                 ],
             ]
         ],
-        [
+        'mainProcess2' => [
             'name' => 'DependentForeverRunningTask',
             'tasks' => [
                 [
@@ -45,7 +45,7 @@ return [
                 ]
             ]
         ],
-        [
+        'mainProcess3' => [
             'name' => 'SuccessAndNotCompletedTask',
             'tasks' => [
                 [
@@ -56,7 +56,7 @@ return [
                 ],
             ]
         ],
-        [
+        'mainProcess4' => [
             'name' => 'ErrorAndThirtySecondsTask',
             'tasks' => [
                 [
@@ -68,8 +68,9 @@ return [
             ]
         ],
     ],
+    // Here we configure the general settings for a tasks
     'tasks' => [
-        [
+        'task1' => [
             'class' => DependentTask::class,
             'timeout' => 5,
             'cooldown' => 5,
@@ -77,7 +78,7 @@ return [
             'rangeStrategy' => UniqueIdRangeStrategy::class,
             'priority' => 20,
         ],
-        [
+        'task2' => [
             'class' => DependeeTask::class,
             'timeout' => 5,
             'cooldown' => 5,
@@ -86,7 +87,7 @@ return [
             'rangeStrategy' => HashRangeStrategy::class,
             'priority' => 20,
         ],
-        [
+        'task3' => [
             'class' => DependentNeverCompletedTask::class,
             'timeout' => 5,
             'cooldown' => 5,
@@ -95,7 +96,7 @@ return [
             'rangeStrategy' => HashRangeStrategy::class,
             'priority' => 20,
         ],
-        [
+        'task4' => [
             'class' => DependeeForeverRunningTask::class,
             'timeout' => 5,
             'cooldown' => 5,
@@ -104,7 +105,7 @@ return [
             'rangeStrategy' => UniqueIdRangeStrategy::class,
             'priority' => 20,
         ],
-        [
+        'task5' => [
             'class' => ThirtySecondsTask::class,
             'timeout' => 60,
             'cooldown' => 5,
@@ -112,7 +113,7 @@ return [
             'rangeStrategy' => UniqueIdRangeStrategy::class,
             'priority' => 3000,
         ],
-        [
+        'task6' => [
             'class' => SuccessTask::class,
             'timeout' => 5,
             'cooldown' => 5,
@@ -120,7 +121,7 @@ return [
             'rangeStrategy' => UniqueIdRangeStrategy::class,
             'priority' => 10,
         ],
-        [
+        'task7' => [
             'class' => ErrorTask::class,
             'timeout' => 5,
             'cooldown' => 5,
@@ -128,7 +129,7 @@ return [
             'rangeStrategy' => UniqueIdRangeStrategy::class,
             'priority' => 10,
         ],
-        [
+        'task8' => [
             'class' => NotCompletedTask::class,
             'timeout' => 60,
             'cooldown' => 5,
