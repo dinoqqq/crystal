@@ -159,7 +159,7 @@ class QueueHeartbeatTest extends BaseTestApp
         $queueHeartbeat->updateDependencies();
         $queueHeartbeat->queueMainProcesses();
 
-        $exception = new CrystalTaskStateErrorException('RunningToNewStateChangeStrategy encountered, already picked up');
+        $exception = new CrystalTaskStateErrorException('RunningToNewStateChangeStrategy encountered, already picked up', 100);
         Phake::verify($queuerMock)->queueingFailed($mainProcess, $exception);
 
         // Should NOT be rescheduled and NOT added

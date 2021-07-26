@@ -42,7 +42,8 @@ class RunningToNewStateChangeStrategy implements StateChangeStrategyInterface
         // Throwing this error allows us to save all the other tasks in a queue, and ignore the dependent ones that
         // are running
         if (!$this->_crystalTasksBaseService->hasDependOnDependency($crystalTask)) {
-            throw new CrystalTaskStateErrorException('RunningToNewStateChangeStrategy encountered, already picked up');
+            $message = CrystalTaskStateErrorException::$errorCodesMessages[100];
+            throw new CrystalTaskStateErrorException($message, 100);
         }
 
         return false;
