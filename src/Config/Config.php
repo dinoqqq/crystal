@@ -27,8 +27,9 @@ class Config implements ConfigInterface
     /**
      * @throws Exception
      */
-    public function validate(array $config): void
+    public function validate(): void
     {
+        $config = $this->_config;
         if (count(array_intersect(self::MANDATORY_KEYS, array_keys($config))) !== count(self::MANDATORY_KEYS)) {
             throw new Exception('The config needs to contain the following keys: '
                 . implode(self::MANDATORY_KEYS, ','));
