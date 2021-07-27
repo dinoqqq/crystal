@@ -67,14 +67,17 @@ class Config implements ConfigInterface
         return $this->_config[$key] ?? null;
     }
 
-    public function getProcessNames(): array
+    public function getMainProcessNames(): array
     {
-        $processNames = [];
-        foreach (($this->_config['mainProcesses'] ?? []) as $process) {
-            $processNames[] = $process['name'];
+        $mainProcessNames = [];
+        foreach (($this->_config['mainProcesses'] ?? []) as $mainProcess) {
+            if ($mainProcess['disabled'] ?? false) {
+                continue;
+            }
+            $mainProcessNames[] = $mainProcess['name'];
         }
 
-        return $processNames;
+        return $mainProcessNames;
     }
 
     /**
