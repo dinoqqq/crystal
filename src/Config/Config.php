@@ -87,6 +87,9 @@ class Config implements ConfigInterface
     {
         $mainProcesses = [];
         foreach (($this->_config['mainProcesses'] ?? []) as $mainProcess) {
+            if ($mainProcess['disabled'] ?? false) {
+                continue;
+            }
             if ($mainProcess['name'] === $mainProcessName) {
                 $mainProcesses[] = $mainProcess;
             }
@@ -161,6 +164,10 @@ class Config implements ConfigInterface
     {
         $dependencies = [];
         foreach (($this->_config['mainProcesses'] ?? []) as $mainProcessConfig) {
+            if ($mainProcess['disabled'] ?? false) {
+                continue;
+            }
+
             foreach ($mainProcessConfig['tasks'] ?? [] as $mainProcessTaskConfig) {
                 $taskConfig = $this->mergeBaseTaskConfigWithMainProcessTaskConfig($mainProcessTaskConfig);
                 if (!isset($taskConfig['dependOn'])) {
