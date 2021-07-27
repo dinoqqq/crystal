@@ -6,9 +6,10 @@ use Crystal\Test\Mock\Task\SuccessTask;
 
 return [
     'enable' => true,
+    'phpExecutable' => 'php',
+    'applicationPhpFile' => '/foo/bar.php',
     'maxExecutionSlots' => 3,
     'maxErrorTries' => 5,
-    'applicationPhpFile' => '/foo/bar.php',
     'sleepTimeSeconds' => 1,
     'runTimeSeconds' => 60,
     'priorityStrategy' => SortByDateCreatedPriorityStrategy::class,

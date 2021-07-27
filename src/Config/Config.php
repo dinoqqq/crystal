@@ -7,6 +7,7 @@ use Exception;
 class Config implements ConfigInterface
 {
     private const MANDATORY_KEYS = [
+        'phpExecutable',
         'applicationPhpFile',
         'maxExecutionSlots',
         'sleepTimeSeconds',

@@ -153,7 +153,7 @@ class ExecuteHeartbeat implements HeartbeatInterface
     public function spawnCrystalTask(CrystalTask $crystalTask): bool
     {
         try {
-            $php = 'php -f ';
+            $php = $this->_config->getConfigByKey('phpExecutable')  . ' -f ';
             $path = escapeshellarg($this->_config->getConfigByKey('applicationPhpFile'))  . ' crystaltaskexecute ';
 
             $idString  = ' --id=' . escapeshellarg($crystalTask->id);

@@ -13,6 +13,8 @@ use Crystal\Test\Mock\Task\SuccessTask;
 use Crystal\Test\Mock\Task\ThirtySecondsTask;
 
 return [
+    // The php executable file
+    'phpExecutable' => 'php',
     // The php file, that is gonna run the task
     'applicationPhpFile' => '/foo/bar.php',
     // Total number of tasks to be executed simultaneously
