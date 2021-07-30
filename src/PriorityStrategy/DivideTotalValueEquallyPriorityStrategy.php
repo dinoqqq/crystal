@@ -3,6 +3,7 @@
 namespace Crystal\PriorityStrategy;
 
 use Exception;
+
 use Crystal\Service\CrystalTasksBaseService;
 
 /**

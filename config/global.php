@@ -1,6 +1,7 @@
 <?php
 
 use Crystal\PriorityStrategy\DivideTotalValueEquallyPriorityStrategy;
+
 use Crystal\RangeStrategy\HashRangeStrategy;
 use Crystal\RangeStrategy\UniqueIdRangeStrategy;
 use Crystal\Test\Mock\Task\DependeeForeverRunningTask;
