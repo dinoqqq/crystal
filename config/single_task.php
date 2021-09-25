@@ -7,7 +7,9 @@ use Crystal\Test\Mock\Task\SuccessTask;
 return [
     'enable' => true,
     'phpExecutable' => 'php',
+    'phpExecutableParameters' => '-f',
     'applicationPhpFile' => '/foo/bar.php',
+    'applicationPhpFileParameters' => 'crystaltaskexecute',
     'maxExecutionSlots' => 3,
     'maxErrorTries' => 5,
     'sleepTimeSeconds' => 1,

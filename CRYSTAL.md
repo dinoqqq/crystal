@@ -276,7 +276,9 @@ use Crystal\Test\Mock\Task\ThirtySecondsTask;
 
 [
     'phpExecutable' => 'php',
+    'phpExecutableParameters' => '-f',
     'applicationPhpFile' => '/app/index.php',
+    'applicationPhpFileParameters' => 'crystaltaskexecute',
     'maxExecutionSlots' => 10,
     'sleepTimeSeconds' => 5,
     'runTimeSeconds' => 60,
@@ -396,15 +398,17 @@ use Crystal\Test\Mock\Task\ThirtySecondsTask;
 
 ```
 
-| Key                   | Description     |
-| :-------------        | :---------- |
-| phpExecutable         | The location of the php executable file.
-| applicationPhpFile    | The location of the php file that is served by your application.
-| maxExecutionSlots     | Total number of tasks to be executed simultaneously.
-| sleepTimeSeconds      | Heartbeat tempo, of queueing/executing/rescheduling new tasks.
-| runTimeSeconds        | Heartbeat total running time, of queueing/executing/rescheduling new tasks. This should be the same as your cronjob timing (60 when the cronjob runs every minute).
-| maxErrorTries         | After this number of error tries we set the state to "error", no further processing.
-| prioritizeStrategy    | The strategy to use of how to prioritize the tasks. Currently there are 2 options: **SortByDateCreatedPriorityStrategy**: will fetch all tasks by earliest date_created. **DivideTotalValueEquallyPriorityStrategy**: will fetch all tasks prioritized by a "priority" key set on the task. This strategy will also avoid starvation.
+| Key                           | Description     |
+| :-------------                | :---------- |
+| phpExecutable                 | The location of the php executable file.
+| phpExecutableParameters       | The parameters to be fed to the phpExecutable.
+| applicationPhpFile            | The location of the php file that is served by your application.
+| applicationPhpFileParameters  | The parameters to be fed to the applicationPhpFile.
+| maxExecutionSlots             | Total number of tasks to be executed simultaneously.
+| sleepTimeSeconds              | Heartbeat tempo, of queueing/executing/rescheduling new tasks.
+| runTimeSeconds                | Heartbeat total running time, of queueing/executing/rescheduling new tasks. This should be the same as your cronjob timing (60 when the cronjob runs every minute).
+| maxErrorTries                 | After this number of error tries we set the state to "error", no further processing.
+| prioritizeStrategy            | The strategy to use of how to prioritize the tasks. Currently there are 2 options: **SortByDateCreatedPriorityStrategy**: will fetch all tasks by earliest date_created. **DivideTotalValueEquallyPriorityStrategy**: will fetch all tasks prioritized by a "priority" key set on the task. This strategy will also avoid starvation.
 
 ### MainProcesses
 

@@ -153,8 +153,10 @@ class ExecuteHeartbeat implements HeartbeatInterface
     public function spawnCrystalTask(CrystalTask $crystalTask): bool
     {
         try {
-            $php = $this->_config->getConfigByKey('phpExecutable')  . ' -f ';
-            $path = escapeshellarg($this->_config->getConfigByKey('applicationPhpFile'))  . ' crystaltaskexecute ';
+            $phpExecutable = $this->_config->getConfigByKey('phpExecutable');
+            $phpExecutableParameters = $this->_config->getConfigByKey('phpExecutableParameters');
+            $applicationPhpFile = escapeshellarg($this->_config->getConfigByKey('applicationPhpFile'));
+            $applicationPhpFileParameters = escapeshellarg($this->_config->getConfigByKey('applicationPhpFileParameters'));
 
             $idString  = ' --id=' . escapeshellarg($crystalTask->id);
             $classString  = ' --class=' . escapeshellarg($crystalTask->class);
@@ -169,7 +171,9 @@ class ExecuteHeartbeat implements HeartbeatInterface
             // Redirect only stdOut (not stdErr) + background job
             $outputRedirect = ' 1>/dev/null &';
 
-            $exec = $php . $path . $idString . $classString . $rangeString . $timeoutString . $cooldownString . $outputRedirect;
+            $exec = $phpExecutable .  ' ' . $phpExecutableParameters . ' ' . $applicationPhpFile . ' '
+                . $applicationPhpFileParameters . $idString . $classString . $rangeString . $timeoutString
+                . $cooldownString . $outputRedirect;
 
             $this->executePhp($exec);
         } catch (Exception $e) {

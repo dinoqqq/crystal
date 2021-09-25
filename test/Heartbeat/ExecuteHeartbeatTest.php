@@ -128,11 +128,11 @@ class ExecuteHeartbeatTest extends BaseTestApp
     }
 
     /**
-     * Should add a crystalTask with the some id set as range
+     * Should create a cli string with the crystal task
      *
      * @throws Exception
      */
-    public function testSpawnCrystalTaskShouldSpawnOneTask()
+    public function testSpawnCrystalTaskShouldCreateCliString()
     {
         $class = DependeeTask::class;
         $crystalTask = $this->_fixtureHelper->setupCrystalTask([
@@ -148,19 +148,25 @@ class ExecuteHeartbeatTest extends BaseTestApp
         /** @var ExecuteHeartbeat $phakeVerify */
         $phakeVerify = Phake::verify($this->_executeHeartbeatMock);
         $phakeVerify->executePhp(Phake::capture($exec));
+        $phpExecutable = $this->_crystal->getConfig()->getConfigByKey('phpExecutable');
+        $phpExecutableParameters = $this->_crystal->getConfig()->getConfigByKey('phpExecutableParameters');
         $applicationPhpFile = $this->_crystal->getConfig()->getConfigByKey('applicationPhpFile');
-        $this->assertEquals("php -f " . escapeshellarg($applicationPhpFile) . " crystaltaskexecute  --id='1' --class="
-            . escapeshellarg($class) . " --range='1' --timeout='30' --cooldown='1' 1>/dev/null &",
+        $applicationPhpFileParameters = $this->_crystal->getConfig()->getConfigByKey('applicationPhpFileParameters');
+
+        $executeString = $phpExecutable . ' ' . $phpExecutableParameters . ' ' . escapeshellarg($applicationPhpFile) . ' ' . escapeshellarg($applicationPhpFileParameters);
+
+        $this->assertEquals($executeString . " --id='1' --class=" . escapeshellarg($class) . " --range='1'"
+            . " --timeout='30' --cooldown='1' 1>/dev/null &",
             $exec
         );
     }
 
     /**
-     * Should add a crystalTask with the some.id id set as range
+     * Should create a cli string with the crystal task with range, timeout and cooldown set
      *
      * @throws Exception
      */
-    public function testSpawnCrystalTaskShouldSpawnOneTaskDifferent()
+    public function testSpawnCrystalTaskShouldCreateCliStringWithParameters()
     {
         $class = SuccessTask::class;
         $crystalTask = $this->_fixtureHelper->setupCrystalTask([
@@ -176,9 +182,15 @@ class ExecuteHeartbeatTest extends BaseTestApp
         /** @var ExecuteHeartbeat $phakeVerify */
         $phakeVerify = Phake::verify($this->_executeHeartbeatMock);
         $phakeVerify->executePhp(Phake::capture($exec));
+        $phpExecutable = $this->_crystal->getConfig()->getConfigByKey('phpExecutable');
+        $phpExecutableParameters = $this->_crystal->getConfig()->getConfigByKey('phpExecutableParameters');
         $applicationPhpFile = $this->_crystal->getConfig()->getConfigByKey('applicationPhpFile');
-        $this->assertEquals("php -f " . escapeshellarg($applicationPhpFile) . " crystaltaskexecute  --id='1' --class="
-            . escapeshellarg($class) . " --range='9' --timeout='11' --cooldown='2' 1>/dev/null &",
+        $applicationPhpFileParameters = $this->_crystal->getConfig()->getConfigByKey('applicationPhpFileParameters');
+
+        $executeString = $phpExecutable . ' ' . $phpExecutableParameters . ' ' . escapeshellarg($applicationPhpFile) . ' ' . escapeshellarg($applicationPhpFileParameters);
+
+        $this->assertEquals($executeString . " --id='1' --class=" . escapeshellarg($class) . " --range='9'"
+            . " --timeout='11' --cooldown='2' 1>/dev/null &",
             $exec
         );
     }
