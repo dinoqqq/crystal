@@ -12,10 +12,7 @@ class RunningToErrorStateChangeStrategy implements StateChangeStrategyInterface
 {
     public function isDirtyShouldContinue(bool $isDirty): bool
     {
-        if ($isDirty) {
-            return false;
-        }
-        return true;
+        return !$isDirty;
     }
 
     /**
@@ -23,10 +20,7 @@ class RunningToErrorStateChangeStrategy implements StateChangeStrategyInterface
      */
     public function stateNotChangedShouldContinue(bool $stateChanged): bool
     {
-        if (!$stateChanged) {
-            return false;
-        }
-        return true;
+        return $stateChanged;
     }
 
     /**

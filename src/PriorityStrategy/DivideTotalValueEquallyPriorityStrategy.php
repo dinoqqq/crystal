@@ -90,7 +90,7 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
         $taskClassesAndPriority = $this->getTasks();
 
         $crystalTasksDbCount = $this->_crystalTasksBaseService->countNextToBeExecutedCrystalTasks(array_column($taskClassesAndPriority, 'class'));
-        if (!count($crystalTasksDbCount)) {
+        if ($crystalTasksDbCount === []) {
             return null;
         }
 
@@ -165,7 +165,7 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
      */
     private function simpleDistributionExecutionSlots(int $availableExecutionSlots, array $taskClassesAndPriority): array
     {
-        foreach ($taskClassesAndPriority as $key => $taskClassAndPriority) {
+        foreach (array_keys($taskClassesAndPriority) as $key) {
             if ($availableExecutionSlots < 1) {
                 unset($taskClassesAndPriority[$key]);
                 continue;
@@ -362,13 +362,13 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
 
             if ($taskClassesAndPriority[$key]['dbCount'] >= $taskClassesAndPriority[$key]['openExecutionSlots']) {
                 $taskClassesAndPriority[$key]['grantedExecutionSlots'] += $taskClassesAndPriority[$key]['openExecutionSlots'];
-                $taskClassesAndPriority[$key]['dbCount'] = $taskClassesAndPriority[$key]['dbCount'] - $taskClassesAndPriority[$key]['openExecutionSlots'];
+                $taskClassesAndPriority[$key]['dbCount'] -= $taskClassesAndPriority[$key]['openExecutionSlots'];
                 $taskClassesAndPriority[$key]['openExecutionSlots'] = 0;
             }
 
             if ($taskClassesAndPriority[$key]['dbCount'] < $taskClassesAndPriority[$key]['openExecutionSlots']) {
                 $taskClassesAndPriority[$key]['grantedExecutionSlots'] += $taskClassesAndPriority[$key]['dbCount'];
-                $taskClassesAndPriority[$key]['openExecutionSlots'] = $taskClassesAndPriority[$key]['openExecutionSlots'] - $taskClassesAndPriority[$key]['dbCount'];
+                $taskClassesAndPriority[$key]['openExecutionSlots'] -= $taskClassesAndPriority[$key]['dbCount'];
                 $taskClassesAndPriority[$key]['dbCount'] = 0;
 
                 $taskClassesAndPriority[$key] = $this->setGrantingExecutionSlotsDone($taskClassesAndPriority[$key]);

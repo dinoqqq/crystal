@@ -12,10 +12,7 @@ class RunningToNotCompletedStateChangeStrategy implements StateChangeStrategyInt
 {
     public function isDirtyShouldContinue(bool $isDirty): bool
     {
-        if ($isDirty) {
-            return false;
-        }
-        return true;
+        return !$isDirty;
     }
 
     /**
@@ -23,10 +20,7 @@ class RunningToNotCompletedStateChangeStrategy implements StateChangeStrategyInt
      */
     public function stateNotChangedShouldContinue(bool $stateChanged): bool
     {
-        if (!$stateChanged) {
-            return false;
-        }
-        return true;
+        return $stateChanged;
     }
 
     /**

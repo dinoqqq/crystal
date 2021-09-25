@@ -100,7 +100,7 @@ class Config implements ConfigInterface
             throw new Exception('Found more than 1 main process name in crystal config');
         }
 
-        if (count($mainProcesses) === 0) {
+        if ($mainProcesses === []) {
             return [];
         }
 

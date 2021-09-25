@@ -85,7 +85,7 @@ class Executor implements ExecutorInterface
      */
     private function validateFirstTask()
     {
-        if (isset($this->_task)) {
+        if ($this->_task !== null) {
             throw new Exception('Trying to executeCrystalTask for the second time, weird');
         }
     }

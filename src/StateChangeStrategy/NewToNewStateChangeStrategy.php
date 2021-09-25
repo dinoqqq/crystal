@@ -18,10 +18,7 @@ class NewToNewStateChangeStrategy implements StateChangeStrategyInterface
 
     public function stateNotChangedShouldContinue(bool $stateChanged): bool
     {
-        if (!$stateChanged) {
-            return false;
-        }
-        return true;
+        return $stateChanged;
     }
 
     /**

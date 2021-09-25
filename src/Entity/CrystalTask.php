@@ -139,17 +139,17 @@ class CrystalTask implements EntityInterface
 
     private function exchangeArray(array $data)
     {
-        $this->id = (! empty($data['id'])) ? $data['id'] : null;
-        $this->class = (! empty($data['class'])) ? $data['class'] : null;
-        $this->entity_uid = (! empty($data['entity_uid'])) ? $data['entity_uid'] : null;
-        $this->timeout = (! empty($data['timeout'])) ? $data['timeout'] : null;
-        $this->cooldown = (! empty($data['cooldown'])) ? $data['cooldown'] : null;
+        $this->id = (empty($data['id'])) ? null : $data['id'];
+        $this->class = (empty($data['class'])) ? null : $data['class'];
+        $this->entity_uid = (empty($data['entity_uid'])) ? null : $data['entity_uid'];
+        $this->timeout = (empty($data['timeout'])) ? null : $data['timeout'];
+        $this->cooldown = (empty($data['cooldown'])) ? null : $data['cooldown'];
         $this->range = $data['range'] ?? '';
-        $this->date_start = (! empty($data['date_start'])) ? $data['date_start'] : null;
-        $this->date_end = (! empty($data['date_end'])) ? $data['date_end'] : null;
+        $this->date_start = (empty($data['date_start'])) ? null : $data['date_start'];
+        $this->date_end = (empty($data['date_end'])) ? null : $data['date_end'];
         $this->state = $data['state'] ?? self::STATE_CRYSTAL_TASK_NEW;
         $this->error_tries = $data['error_tries'] ?? 0;
-        $this->date_created = (! empty($data['date_created'])) ? $data['date_created'] : (new DateTime)->format('Y-m-d H:i:s');
+        $this->date_created = (empty($data['date_created'])) ? (new DateTime)->format('Y-m-d H:i:s') : $data['date_created'];
     }
 
     /**
@@ -197,16 +197,10 @@ class CrystalTask implements EntityInterface
         $dateStart = (new Datetime)->createFromFormat('Y-m-d H:i:s', $this->date_start);
         $dateNow = (new Datetime);
         $period = $this->timeout + $this->cooldown + self::STATE_CRYSTAL_TASK_RUNNING_TO_DEAD_COOLDOWN;
-
-        if (!is_null($this->date_start) 
+        return !is_null($this->date_start) 
             && is_null($this->date_end) 
             && $this->state === self::STATE_CRYSTAL_TASK_RUNNING
-            && $dateNow->sub(new DateInterval('PT' . $period . 'S')) < $dateStart
-        )
-        {
-            return true;
-        }
-        return false;
+            && $dateNow->sub(new DateInterval('PT' . $period . 'S')) < $dateStart;
     }
 
     /**
@@ -217,16 +211,10 @@ class CrystalTask implements EntityInterface
         $dateStart = (new Datetime)->createFromFormat('Y-m-d H:i:s', $this->date_start);
         $dateNow = (new Datetime);
         $period = $this->timeout + $this->cooldown + self::STATE_CRYSTAL_TASK_RUNNING_TO_DEAD_COOLDOWN;
-
-        if (!is_null($this->date_start) 
+        return !is_null($this->date_start) 
             && is_null($this->date_end) 
             && $this->state === self::STATE_CRYSTAL_TASK_RUNNING
-            && $dateNow->sub(new DateInterval('PT' . $period . 'S')) >= $dateStart
-        )
-        {
-            return true;
-        }
-        return false;
+            && $dateNow->sub(new DateInterval('PT' . $period . 'S')) >= $dateStart;
     }
 
     public function isStateCrystalTaskError(): bool
@@ -254,16 +242,10 @@ class CrystalTask implements EntityInterface
         $dateStart = (new Datetime)->createFromFormat('Y-m-d H:i:s', $this->date_start);
         $dateNow = (new Datetime);
         $period = $this->timeout + $this->cooldown + self::STATE_CRYSTAL_TASK_RUNNING_TO_DEAD_COOLDOWN + self::STATE_CRYSTAL_TASK_RESCHEDULE_COOLDOWN;
-
-        if (!is_null($this->date_start) 
+        return !is_null($this->date_start) 
             && is_null($this->date_end) 
             && $this->state === self::STATE_CRYSTAL_TASK_RUNNING
-            && $dateNow->sub(new DateInterval('PT' . $period . 'S')) >= $dateStart
-        )
-        {
-            return true;
-        }
-        return false;
+            && $dateNow->sub(new DateInterval('PT' . $period . 'S')) >= $dateStart;
     }
 
     /**
@@ -276,16 +258,10 @@ class CrystalTask implements EntityInterface
         $dateEnd = (new Datetime)->createFromFormat('Y-m-d H:i:s', $this->date_end);
         $dateNow = (new Datetime);
         $period = self::STATE_CRYSTAL_TASK_RESCHEDULE_COOLDOWN;
-
-        if (!is_null($this->date_start) 
+        return !is_null($this->date_start) 
             && !is_null($this->date_end) 
             && $this->state === self::STATE_CRYSTAL_TASK_NOT_COMPLETED
-            && $dateNow->sub(new DateInterval('PT' . $period . 'S')) >= $dateEnd
-        )
-        {
-            return true;
-        }
-        return false;
+            && $dateNow->sub(new DateInterval('PT' . $period . 'S')) >= $dateEnd;
     }
 
 

@@ -10,7 +10,7 @@ trait TableTrait
 {
     public function returnOneOrNull(array $result): ?EntityInterface
     {
-        if (!count($result)) {
+        if (count($result) === 0) {
             return null;
         }
 

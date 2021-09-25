@@ -25,9 +25,9 @@ class CrystalTaskDependency implements EntityInterface
 
     private function exchangeArray(array $data)
     {
-        $this->id = (! empty($data['id'])) ? $data['id'] : null;
-        $this->class = (! empty($data['class'])) ? $data['class'] : null;
-        $this->depend_on = (! empty($data['depend_on'])) ? $data['depend_on'] : null;
+        $this->id = (empty($data['id'])) ? null : $data['id'];
+        $this->class = (empty($data['class'])) ? null : $data['class'];
+        $this->depend_on = (empty($data['depend_on'])) ? null : $data['depend_on'];
     }
 
     public function getValuesUniqueIndexAsArray(): array
