@@ -20,17 +20,15 @@ jobs:
           MYSQL_USER: crystal
           MYSQL_PASSWORD: crystal
           MYSQL_ROOT_PASSWORD: crystal
-        ports:
-        - 32574:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
 
     steps:
       - name: Verify MySQL connection from container
         run: |
           sudo /etc/init.d/mysql start
-          mysql --host localhost --port 32547 -ucrystal -pcrystal -e "CREATE DATABASE test;"
-          mysql --host localhost --port 32547 -ucrystal -pcrystal -e "SHOW DATABASES"
-          mysql --host localhost --port 32547 -ucrystal -pcrystal test < migration/schema.sql
+          mysql --host mydb -ucrystal -pcrystal -e "CREATE DATABASE test;"
+          mysql --host mydb -ucrystal -pcrystal -e "SHOW DATABASES"
+          mysql --host mydb -ucrystal -pcrystal test < migration/schema.sql
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
