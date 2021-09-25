@@ -40,9 +40,9 @@ jobs:
           coverage: none
 
       - run: |
-          sudo /etc/init.d/mysql start
-          mysql --host myMysqlHost -e 'CREATE DATABASE test;' -uroot -proot
-          mysql --host myMysqlHost -uroot -proot test < migration/schema.sql
+        apt-get update
+        apt-get install -y mysql-client
+        mysql --host myMysqlHost -uroot -ppassword -e "SHOW DATABASES"
 
       - name: Get composer cache directory
         id: composer-cache
