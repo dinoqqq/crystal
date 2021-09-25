@@ -2,7 +2,7 @@
 
 namespace Crystal\Heartbeat;
 
-interface HeartbeatFactoryInterface {
+interface HeartbeatFactoryInterface
+{
     public function create(string $type): HeartbeatInterface;
 }
-

@@ -12,8 +12,8 @@ class CrystalTaskDependency implements EntityInterface
      * A task is considered a duplicate when all these columns are the same
      */
     public const UNIQUE_INDEX_CRYSTAL_TASK_DEPENDENCY = [
-        'class', 
-        'depend_on' 
+        'class',
+        'depend_on'
     ];
 
     public function __construct(array $data = [])
@@ -37,11 +37,8 @@ class CrystalTaskDependency implements EntityInterface
             if (in_array($key, self::UNIQUE_INDEX_CRYSTAL_TASK_DEPENDENCY)) {
                 $result[$key] = $value;
             }
-
         }
 
         return $result;
     }
-
 }
-

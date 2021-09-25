@@ -3,7 +3,6 @@
 namespace Crystal\StateChangeStrategy;
 
 use Exception;
-
 use Crystal\Entity\CrystalTask;
 use Crystal\Service\CrystalTasksBaseService;
 
@@ -13,8 +12,7 @@ class StateChangeStrategyFactory
 
     public function __construct(
         CrystalTasksBaseService $crystalTasksBaseService
-    )
-    {
+    ) {
         $this->_crystalTasksBaseService = $crystalTasksBaseService;
     }
 
@@ -69,5 +67,4 @@ class StateChangeStrategyFactory
 
         throw new Exception('StateChangeStrategy not found');
     }
-
 }

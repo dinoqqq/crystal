@@ -5,7 +5,7 @@ namespace Crystal\PriorityStrategy;
 use Exception;
 use Crystal\Service\CrystalTasksBaseService;
 
-class PriorityStrategyFactory implements PriorityStrategyFactoryInterface 
+class PriorityStrategyFactory implements PriorityStrategyFactoryInterface
 {
     private $_config;
     private $_crystalTasksBaseService;
@@ -13,8 +13,7 @@ class PriorityStrategyFactory implements PriorityStrategyFactoryInterface
     public function __construct(
         array $config,
         CrystalTasksBaseService $crystalTasksBaseService
-    )
-    {
+    ) {
         $this->_config = $config;
         $this->_crystalTasksBaseService = $crystalTasksBaseService;
     }

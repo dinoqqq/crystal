@@ -22,17 +22,17 @@ use Crystal\Exception\CrystalTaskStateErrorException;
      *
      *             QUEUE()
      *             ┌─────┐
-     *             │     │ 
+     *             │     │
      *         ┌───▼─────────┐            ┌─────────────┐    ┌─────────────┐
-     * QUEUE() │             │  EXECUTE() │             │TIME│(DB: RUNNING)│              
-     * ───────►│     NEW     ├───────────►│   RUNNING   ├───►│    DEAD     ├──────┐       
-     *         │             │            │             │    │             │      │      
-     *         └───────▲───▲─┘            └──┬──────────┘    └─────────────┘      │     
-     *                 │   │                 │                                    │    
-     *                 │   │                 │                                    │    
+     * QUEUE() │             │  EXECUTE() │             │TIME│(DB: RUNNING)│
+     * ───────►│     NEW     ├───────────►│   RUNNING   ├───►│    DEAD     ├──────┐
+     *         │             │            │             │    │             │      │
+     *         └───────▲───▲─┘            └──┬──────────┘    └─────────────┘      │
+     *                 │   │                 │                                    │
+     *                 │   │                 │                                    │
      *                 │   │                 │               ┌─────────────┐      │
      *                 │   │                 │   EXECUTE()   │             │      │
-     *                 │   │                 └──────────────►│NOT_COMPLETED├──────┐ 
+     *                 │   │                 └──────────────►│NOT_COMPLETED├──────┐
      *                 │   │                 │               │             │      │
      *                 │   │                 │               └─────────────┘      │
      *                 │   │                 │                                    │
@@ -44,13 +44,13 @@ use Crystal\Exception\CrystalTaskStateErrorException;
      *                 │   │                 │                                 │  │
      *                 │   │                 │               ┌─────────────┐   │  │
      *                 │   │                 │   EXECUTE()   │             │   │  │
-     *                 │   │                 └──────────────►│  COMPLETED  │───┐  │  
-     *                 │   │                                 │             │   │  │  
-     *                 │   │                                 └─────────────┘   │  │  
-     *                 │   │           QUEUE()                                 │  │  
-     *                 │   └───────────────────────────────────────────────────┘  │  
-     *                 │             RESCHEDULE()                                 │  
-     *                 └──────────────────────────────────────────────────────────┘  
+     *                 │   │                 └──────────────►│  COMPLETED  │───┐  │
+     *                 │   │                                 │             │   │  │
+     *                 │   │                                 └─────────────┘   │  │
+     *                 │   │           QUEUE()                                 │  │
+     *                 │   └───────────────────────────────────────────────────┘  │
+     *                 │             RESCHEDULE()                                 │
+     *                 └──────────────────────────────────────────────────────────┘
      *
      * Functions for state changes:
      *
@@ -64,7 +64,7 @@ use Crystal\Exception\CrystalTaskStateErrorException;
      * stateDeadToNew();
      * stateNotCompletedToNew();
      *
-     * QUEUE() 
+     * QUEUE()
      * stateErrorToNew();
      * stateCompletedToNew();
      * stateNewToNew();
@@ -149,7 +149,7 @@ class CrystalTask implements EntityInterface
         $this->date_end = (empty($data['date_end'])) ? null : $data['date_end'];
         $this->state = $data['state'] ?? self::STATE_CRYSTAL_TASK_NEW;
         $this->error_tries = $data['error_tries'] ?? 0;
-        $this->date_created = (empty($data['date_created'])) ? (new DateTime)->format('Y-m-d H:i:s') : $data['date_created'];
+        $this->date_created = (empty($data['date_created'])) ? (new DateTime())->format('Y-m-d H:i:s') : $data['date_created'];
     }
 
     /**
@@ -192,13 +192,13 @@ class CrystalTask implements EntityInterface
     /**
      * @throws Exception
      */
-    public function isStateCrystalTaskRunning(): bool 
+    public function isStateCrystalTaskRunning(): bool
     {
-        $dateStart = (new Datetime)->createFromFormat('Y-m-d H:i:s', $this->date_start);
-        $dateNow = (new Datetime);
+        $dateStart = (new Datetime())->createFromFormat('Y-m-d H:i:s', $this->date_start);
+        $dateNow = (new Datetime());
         $period = $this->timeout + $this->cooldown + self::STATE_CRYSTAL_TASK_RUNNING_TO_DEAD_COOLDOWN;
-        return !is_null($this->date_start) 
-            && is_null($this->date_end) 
+        return !is_null($this->date_start)
+            && is_null($this->date_end)
             && $this->state === self::STATE_CRYSTAL_TASK_RUNNING
             && $dateNow->sub(new DateInterval('PT' . $period . 'S')) < $dateStart;
     }
@@ -206,13 +206,13 @@ class CrystalTask implements EntityInterface
     /**
      * @throws Exception
      */
-    public function isStateCrystalTaskDead(): bool 
+    public function isStateCrystalTaskDead(): bool
     {
-        $dateStart = (new Datetime)->createFromFormat('Y-m-d H:i:s', $this->date_start);
-        $dateNow = (new Datetime);
+        $dateStart = (new Datetime())->createFromFormat('Y-m-d H:i:s', $this->date_start);
+        $dateNow = (new Datetime());
         $period = $this->timeout + $this->cooldown + self::STATE_CRYSTAL_TASK_RUNNING_TO_DEAD_COOLDOWN;
-        return !is_null($this->date_start) 
-            && is_null($this->date_end) 
+        return !is_null($this->date_start)
+            && is_null($this->date_end)
             && $this->state === self::STATE_CRYSTAL_TASK_RUNNING
             && $dateNow->sub(new DateInterval('PT' . $period . 'S')) >= $dateStart;
     }
@@ -237,13 +237,13 @@ class CrystalTask implements EntityInterface
      *
      * @throws Exception
      */
-    public function isStateCrystalTaskDeadAndAfterRescheduleCooldown(): bool 
+    public function isStateCrystalTaskDeadAndAfterRescheduleCooldown(): bool
     {
-        $dateStart = (new Datetime)->createFromFormat('Y-m-d H:i:s', $this->date_start);
-        $dateNow = (new Datetime);
+        $dateStart = (new Datetime())->createFromFormat('Y-m-d H:i:s', $this->date_start);
+        $dateNow = (new Datetime());
         $period = $this->timeout + $this->cooldown + self::STATE_CRYSTAL_TASK_RUNNING_TO_DEAD_COOLDOWN + self::STATE_CRYSTAL_TASK_RESCHEDULE_COOLDOWN;
-        return !is_null($this->date_start) 
-            && is_null($this->date_end) 
+        return !is_null($this->date_start)
+            && is_null($this->date_end)
             && $this->state === self::STATE_CRYSTAL_TASK_RUNNING
             && $dateNow->sub(new DateInterval('PT' . $period . 'S')) >= $dateStart;
     }
@@ -253,13 +253,13 @@ class CrystalTask implements EntityInterface
      *
      * @throws Exception
      */
-    public function isStateCrystalTaskNotCompletedAndAfterRescheduleCooldown(): bool 
+    public function isStateCrystalTaskNotCompletedAndAfterRescheduleCooldown(): bool
     {
-        $dateEnd = (new Datetime)->createFromFormat('Y-m-d H:i:s', $this->date_end);
-        $dateNow = (new Datetime);
+        $dateEnd = (new Datetime())->createFromFormat('Y-m-d H:i:s', $this->date_end);
+        $dateNow = (new Datetime());
         $period = self::STATE_CRYSTAL_TASK_RESCHEDULE_COOLDOWN;
-        return !is_null($this->date_start) 
-            && !is_null($this->date_end) 
+        return !is_null($this->date_start)
+            && !is_null($this->date_end)
             && $this->state === self::STATE_CRYSTAL_TASK_NOT_COMPLETED
             && $dateNow->sub(new DateInterval('PT' . $period . 'S')) >= $dateEnd;
     }
@@ -275,7 +275,7 @@ class CrystalTask implements EntityInterface
             throw new CrystalTaskStateErrorException('Trying to set state NEW to RUNNING failed, weird');
         }
 
-        $this->date_start = (new DateTime)->format('Y-m-d H:i:s');
+        $this->date_start = (new DateTime())->format('Y-m-d H:i:s');
         $this->state = self::STATE_CRYSTAL_TASK_RUNNING;
     }
 
@@ -289,7 +289,7 @@ class CrystalTask implements EntityInterface
             throw new CrystalTaskStateErrorException('Trying to set state RUNNING to ERROR failed, weird');
         }
 
-        $this->date_end = (new DateTime)->format('Y-m-d H:i:s');
+        $this->date_end = (new DateTime())->format('Y-m-d H:i:s');
         $this->state = self::STATE_CRYSTAL_TASK_ERROR;
     }
 
@@ -304,7 +304,7 @@ class CrystalTask implements EntityInterface
             throw new CrystalTaskStateErrorException('Trying to set state RUNNING to COMPLETED failed, weird');
         }
 
-        $this->date_end = (new DateTime)->format('Y-m-d H:i:s');
+        $this->date_end = (new DateTime())->format('Y-m-d H:i:s');
         $this->state = self::STATE_CRYSTAL_TASK_COMPLETED;
     }
 
@@ -318,7 +318,7 @@ class CrystalTask implements EntityInterface
             throw new CrystalTaskStateErrorException('Trying to set state RUNNING to NOT_COMPLETED failed, weird');
         }
 
-        $this->date_end = (new DateTime)->format('Y-m-d H:i:s');
+        $this->date_end = (new DateTime())->format('Y-m-d H:i:s');
         $this->state = self::STATE_CRYSTAL_TASK_NOT_COMPLETED;
     }
 
@@ -336,7 +336,7 @@ class CrystalTask implements EntityInterface
         $this->date_end = null;
         $this->state = self::STATE_CRYSTAL_TASK_NEW;
         $this->error_tries = 0;
-        $this->date_created = (new DateTime)->format('Y-m-d H:i:s');
+        $this->date_created = (new DateTime())->format('Y-m-d H:i:s');
     }
 
     /**
@@ -352,7 +352,7 @@ class CrystalTask implements EntityInterface
         $this->date_start = null;
         $this->date_end = null;
         $this->state = self::STATE_CRYSTAL_TASK_NEW;
-        $this->date_created = (new DateTime)->format('Y-m-d H:i:s');
+        $this->date_created = (new DateTime())->format('Y-m-d H:i:s');
     }
 
     /**
@@ -369,7 +369,7 @@ class CrystalTask implements EntityInterface
         $this->date_end = null;
         $this->state = self::STATE_CRYSTAL_TASK_NEW;
         $this->error_tries = 0;
-        $this->date_created = (new DateTime)->format('Y-m-d H:i:s');
+        $this->date_created = (new DateTime())->format('Y-m-d H:i:s');
     }
 
     /**
@@ -384,7 +384,7 @@ class CrystalTask implements EntityInterface
         $this->date_start = null;
         $this->date_end = null;
         $this->state = self::STATE_CRYSTAL_TASK_NEW;
-        $this->date_created = (new DateTime)->format('Y-m-d H:i:s');
+        $this->date_created = (new DateTime())->format('Y-m-d H:i:s');
     }
 
     /**
@@ -396,7 +396,7 @@ class CrystalTask implements EntityInterface
         if ($this->getState() !== self::STATE_CRYSTAL_TASK_NEW) {
             throw new CrystalTaskStateErrorException('Trying to set state NEW to NEW failed, weird');
         }
-        $this->date_created = (new DateTime)->format('Y-m-d H:i:s');
+        $this->date_created = (new DateTime())->format('Y-m-d H:i:s');
     }
 
     /**
@@ -438,5 +438,4 @@ class CrystalTask implements EntityInterface
 
         return false;
     }
-
 }

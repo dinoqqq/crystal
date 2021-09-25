@@ -2,7 +2,7 @@
 
 namespace Crystal\Heartbeat;
 
-interface HeartbeatInterface {
+interface HeartbeatInterface
+{
     public function heartbeat(): bool;
 }
-

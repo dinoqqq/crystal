@@ -7,7 +7,8 @@ use Crystal\Config\TaskConfig;
 use Crystal\Config\ConfigInterface;
 use Crystal\Task\TaskFactoryInterface;
 
-class MainProcess implements MainProcessInterface {
+class MainProcess implements MainProcessInterface
+{
 
     private $_name;
     private $_tasks;
@@ -21,8 +22,7 @@ class MainProcess implements MainProcessInterface {
         TaskFactoryInterface $taskFactory,
         string $name,
         $data
-    )
-    {
+    ) {
         $this->_name = $name;
         $this->_data = $data;
 
@@ -69,8 +69,7 @@ class MainProcess implements MainProcessInterface {
         TaskFactoryInterface $taskFactory,
         string $name,
         $data
-    ): MainProcessInterface
-    {
+    ): MainProcessInterface {
         return new self($config, $taskFactory, $name, $data);
     }
 }

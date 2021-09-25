@@ -9,7 +9,8 @@ use Crystal\Service\CrystalTasksRescheduleService;
 use Crystal\Service\CrystalTasksBaseService;
 use Crystal\Config\Config;
 
-class RescheduleHeartbeat implements HeartbeatInterface {
+class RescheduleHeartbeat implements HeartbeatInterface
+{
 
     private $_config;
     private $_crystalTasksBaseService;
@@ -22,8 +23,7 @@ class RescheduleHeartbeat implements HeartbeatInterface {
         Config $config,
         CrystalTasksBaseService $crystalTasksBaseService,
         CrystalTasksRescheduleService $crystalTasksRescheduleService
-    )
-    {
+    ) {
         $this->_config = $config;
         $this->_crystalTasksBaseService = $crystalTasksBaseService;
         $this->_crystalTasksRescheduleService = $crystalTasksRescheduleService;
@@ -52,7 +52,7 @@ class RescheduleHeartbeat implements HeartbeatInterface {
         }
 
         return true;
-}
+    }
 
     /**
      * @throws Exception
@@ -63,7 +63,8 @@ class RescheduleHeartbeat implements HeartbeatInterface {
 
         /** @var CrystalTask $crystalTask */
         foreach ($crystalTasks ?? [] as $crystalTask) {
-            if (!$crystalTask->isStateCrystalTaskDeadAndAfterRescheduleCooldown()
+            if (
+                !$crystalTask->isStateCrystalTaskDeadAndAfterRescheduleCooldown()
                 && !$crystalTask->isStateCrystalTaskNotCompletedAndAfterRescheduleCooldown()
             ) {
                 continue;

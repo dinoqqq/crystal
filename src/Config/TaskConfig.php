@@ -1,15 +1,15 @@
 <?php
 
 namespace Crystal\Config;
-use Exception;
 
+use Exception;
 use Crystal\RangeStrategy\RangeStrategyInterface;
 
 class TaskConfig implements TaskConfigInterface
 {
     private const MANDATORY_KEYS = [
-        'entityUid', 
-        'resources', 
+        'entityUid',
+        'resources',
         'timeout',
         'cooldown',
         'class',

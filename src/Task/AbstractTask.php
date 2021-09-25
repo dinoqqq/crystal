@@ -3,10 +3,10 @@
 namespace Crystal\Task;
 
 use Crystal\Entity\CrystalTask;
-
 use Crystal\Config\TaskConfigInterface;
 
-class AbstractTask {
+class AbstractTask
+{
     private $_taskConfig = null;
     private $_crystalTask = null;
     private $_timeoutReached = false;
@@ -57,5 +57,3 @@ class AbstractTask {
         $this->_data = $data;
     }
 }
-
-

@@ -27,8 +27,7 @@ class SortByDateCreatedPriorityStrategy implements PriorityStrategyInterface
      */
     public function __construct(
         array $config
-    )
-    {
+    ) {
         $this->_config = $config;
 
         $this->validate();
@@ -68,4 +67,3 @@ class SortByDateCreatedPriorityStrategy implements PriorityStrategyInterface
         }
     }
 }
-

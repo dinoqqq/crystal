@@ -2,7 +2,7 @@
 
 namespace Crystal\Executor;
 
-interface ExecutorFactoryInterface {
+interface ExecutorFactoryInterface
+{
     public function create(): ExecutorInterface;
 }
-

@@ -2,7 +2,8 @@
 
 namespace Crystal\Config;
 
-interface ConfigInterface {
+interface ConfigInterface
+{
     public function validate();
     public function getConfigByKey(string $key);
     public function getMainProcessNames(): array;

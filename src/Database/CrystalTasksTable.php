@@ -34,8 +34,7 @@ class CrystalTasksTable extends AbstractTable
 
     public function __construct(
         Medoo $database
-    )
-    {
+    ) {
         $this->_database = $database;
     }
 
@@ -49,7 +48,7 @@ class CrystalTasksTable extends AbstractTable
      */
     private function getWhereClauseStateCrystalTaskRunning(): string
     {
-        return '(`state` = \'' . CrystalTask::STATE_CRYSTAL_TASK_RUNNING . '\' AND `date_start` >= DATE_SUB(\'' . (new DateTime)->format('Y-m-d H:i:s') . '\', INTERVAL (`timeout`+`cooldown`) SECOND))';
+        return '(`state` = \'' . CrystalTask::STATE_CRYSTAL_TASK_RUNNING . '\' AND `date_start` >= DATE_SUB(\'' . (new DateTime())->format('Y-m-d H:i:s') . '\', INTERVAL (`timeout`+`cooldown`) SECOND))';
     }
 
     /**
@@ -58,7 +57,7 @@ class CrystalTasksTable extends AbstractTable
      */
     private function getWhereClauseCrystalTaskDead(): string
     {
-        return '(`state` = \'' . CrystalTask::STATE_CRYSTAL_TASK_RUNNING . '\' AND `date_start` < DATE_SUB(\'' . (new DateTime)->format('Y-m-d H:i:s') . '\', INTERVAL (`timeout`+`cooldown`+' . CrystalTask::STATE_CRYSTAL_TASK_RUNNING_TO_DEAD_COOLDOWN . ') SECOND))';
+        return '(`state` = \'' . CrystalTask::STATE_CRYSTAL_TASK_RUNNING . '\' AND `date_start` < DATE_SUB(\'' . (new DateTime())->format('Y-m-d H:i:s') . '\', INTERVAL (`timeout`+`cooldown`+' . CrystalTask::STATE_CRYSTAL_TASK_RUNNING_TO_DEAD_COOLDOWN . ') SECOND))';
     }
 
     private function getWhereClauseStateCrystalTaskCompleted(): string
@@ -131,7 +130,6 @@ class CrystalTasksTable extends AbstractTable
             . ' FOR UPDATE';
 
         return $this->_database->query($query)->fetchAll(PDO::FETCH_CLASS, CrystalTask::class);
-        
     }
 
     public function countNextToBeExecutedCrystalTasks(array $taskClasses): array
@@ -329,8 +327,7 @@ class CrystalTasksTable extends AbstractTable
     private function buildWhereClauseUnfinishedCrystalTasksByRangeAndTaskClasses(
         string $range,
         array $taskClasses
-    ): string
-    {
+    ): string {
         $where = [];
         foreach ($taskClasses as $taskClass) {
             $where[] = $this->_database->quote($taskClass);

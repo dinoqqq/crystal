@@ -5,7 +5,8 @@ namespace Crystal\Task;
 use Crystal\Config\TaskConfigInterface;
 use Crystal\Entity\CrystalTask;
 
-interface TaskInterface {
+interface TaskInterface
+{
     public function setTaskConfig(TaskConfigInterface $taskConfig): void;
     public function getTaskConfig(): ?TaskConfigInterface;
 
@@ -22,4 +23,3 @@ interface TaskInterface {
     public function queue(): array;
     public function execute(): bool;
 }
-

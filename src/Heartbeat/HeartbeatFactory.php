@@ -4,7 +4,6 @@ namespace Crystal\Heartbeat;
 
 use Crystal\Config\Config;
 use Exception;
-
 use Crystal\Service\CrystalTasksBaseService;
 use Crystal\Service\CrystalTasksExecuteService;
 use Crystal\Service\CrystalTasksQueueService;
@@ -18,8 +17,7 @@ class HeartbeatFactory implements HeartbeatFactoryInterface
 
     public function __construct(
         ContainerInterface $container
-    )
-    {
+    ) {
         $this->_container = $container;
     }
 

@@ -185,5 +185,4 @@ class Config implements ConfigInterface
 
         return $dependencies;
     }
-
 }

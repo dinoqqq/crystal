@@ -1,9 +1,9 @@
 <?php
+
 namespace Crystal\Service;
 
 use Crystal\Crystal;
 use Exception;
-
 use Crystal\Exception\CrystalTaskStateErrorException;
 use Crystal\Entity\CrystalTask;
 use Crystal\StateChangeStrategy\StateChangeStrategyFactory;
@@ -16,8 +16,7 @@ class CrystalTasksQueueService
     public function __construct(
         CrystalTasksBaseService $crystalTasksBaseService,
         StateChangeStrategyFactory $stateChangeStrategyFactory
-    )
-    {
+    ) {
         $this->_crystalTasksBaseService = $crystalTasksBaseService;
         $this->_stateChangeStrategyFactory = $stateChangeStrategyFactory;
     }
@@ -74,7 +73,6 @@ class CrystalTasksQueueService
         $queue = $this->_crystalTasksBaseService->sortByClassNameEntityUidAndRangeId($queue);
 
         foreach ($queue as $crystalTask) {
-
             // It can be that the tasks doesn't exist yet, just queue it then (state NOTHING to NEW)
             $crystalTaskExisting = $this->_crystalTasksBaseService->getUniqueCrystalTaskWithForUpdate($crystalTask);
             if (!$crystalTaskExisting instanceof CrystalTask) {
@@ -125,5 +123,4 @@ class CrystalTasksQueueService
             $this->_crystalTasksBaseService::EXCEPTION_CODE_VALIDATION_STATE_CHANGE,
         ]);
     }
-
 }

@@ -2,7 +2,7 @@
 
 namespace Crystal\Task;
 
-interface TaskFactoryInterface {
+interface TaskFactoryInterface
+{
     public function create(string $className): TaskInterface;
 }
-

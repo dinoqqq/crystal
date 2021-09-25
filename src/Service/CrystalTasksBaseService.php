@@ -1,4 +1,5 @@
 <?php
+
 namespace Crystal\Service;
 
 use Crystal\Crystal;
@@ -31,8 +32,7 @@ class CrystalTasksBaseService
         CrystalTasksTable $crystalTasksTable,
         CrystalTasksDependenciesTable $crystalTasksDependenciesTable,
         ?CrystalConfig $crystalConfig
-    )
-    {
+    ) {
         $this->_config = $config;
         $this->_database = $database;
         $this->_crystalTasksTable = $crystalTasksTable;
@@ -139,22 +139,22 @@ class CrystalTasksBaseService
     /**
      * @throws Exception
      */
-     public function getUnfinishedCrystalTasksByRangeAndMainProcessName(int $range, string $mainProcessName): array
-     {
-         $taskClasses = $this->_crystalConfig->getTaskClassesByMainProcessNameAndRangeStrategy(
-             $mainProcessName,
-             UniqueIdRangeStrategy::class
-         );
-         return $this->_crystalTasksTable->getUnfinishedCrystalTasksByRangeAndTaskClasses($range, $taskClasses);
-     }
+    public function getUnfinishedCrystalTasksByRangeAndMainProcessName(int $range, string $mainProcessName): array
+    {
+        $taskClasses = $this->_crystalConfig->getTaskClassesByMainProcessNameAndRangeStrategy(
+            $mainProcessName,
+            UniqueIdRangeStrategy::class
+        );
+        return $this->_crystalTasksTable->getUnfinishedCrystalTasksByRangeAndTaskClasses($range, $taskClasses);
+    }
 
     /**
      * @throws Exception
      */
-     public function isMainProcessNameInConfig(string $mainProcessName): bool
-     {
-         return $this->_crystalConfig->isMainProcessNameInConfig($mainProcessName);
-     }
+    public function isMainProcessNameInConfig(string $mainProcessName): bool
+    {
+        return $this->_crystalConfig->isMainProcessNameInConfig($mainProcessName);
+    }
 
     public function beginTransaction(): void
     {
@@ -187,7 +187,7 @@ class CrystalTasksBaseService
      * @throws Exception
      */
     public function saveCrystalTaskAndIncreaseErrorTries(CrystalTask $crystalTask): bool
-    { 
+    {
         $crystalTask->increaseErrorTries();
 
         // TODO: change state should be in transaction
@@ -292,8 +292,7 @@ class CrystalTasksBaseService
     private function getCrystalTaskDependenciesToBeRemoved(
         array $crystalTaskDependenciesExisting,
         array $crystalTaskDependenciesNew
-    ): array
-    {
+    ): array {
         $crystalTaskDependenciesToBeRemoved = [];
         foreach ($crystalTaskDependenciesExisting as $crystalTaskDependencyExisting) {
             foreach ($crystalTaskDependenciesNew as $crystalTaskDependencyNew) {
@@ -312,8 +311,7 @@ class CrystalTasksBaseService
     private function getCrystalTaskDependenciesToBeAdded(
         array $crystalTaskDependenciesExisting,
         array $crystalTaskDependenciesNew
-    ): array
-    {
+    ): array {
         $crystalTaskDependenciesToBeAdded = [];
         foreach ($crystalTaskDependenciesNew as $crystalTaskDependencyNew) {
             foreach ($crystalTaskDependenciesExisting as $crystalTaskDependencyExisting) {
@@ -338,8 +336,7 @@ class CrystalTasksBaseService
         ?CrystalTask $crystalTaskExisting,
         CrystalTask $crystalTask,
         StateChangeStrategyInterface $stateChangeStrategy
-    ): void
-    {
+    ): void {
         // Should always exist
         if (!$crystalTaskExisting instanceof CrystalTask) {
             throw new Exception('CrystalTask does not exist anymore, weird', self::EXCEPTION_CODE_VALIDATION_NOT_EXISTS);
@@ -372,7 +369,7 @@ class CrystalTasksBaseService
 
     public function sortByClassNameEntityUidAndRangeId(array $crystalTasks): array
     {
-        usort($crystalTasks, function($a, $b) {
+        usort($crystalTasks, function ($a, $b) {
             return [$a->class, $a->entity_uid, $a->range] <=> [$b->class, $b->entity_uid, $b->range];
         });
 
@@ -390,6 +387,4 @@ class CrystalTasksBaseService
         $crystalTask->stateRunningToError();
         return $this->_crystalTasksTable->save($crystalTask);
     }
-
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Crystal\Service;
 
 use Exception;
@@ -16,8 +17,7 @@ class CrystalTasksExecuteService
     public function __construct(
         CrystalTasksBaseService $crystalTasksBaseService,
         StateChangeStrategyFactory $stateChangeStrategyFactory
-    )
-    {
+    ) {
         $this->_crystalTasksBaseService = $crystalTasksBaseService;
         $this->_stateChangeStrategyFactory = $stateChangeStrategyFactory;
     }
@@ -28,8 +28,7 @@ class CrystalTasksExecuteService
     public function getNextToBeExecutedCrystalTasksByPriorityStrategyAndChangeState(
         PriorityStrategyInterface $priorityStrategy,
         $availableExecutionSlots
-    ): array
-    {
+    ): array {
         $stateChangeStrategy = $this->_stateChangeStrategyFactory->create(
             CrystalTask::STATE_CRYSTAL_TASK_NEW,
             CrystalTask::STATE_CRYSTAL_TASK_RUNNING
@@ -94,5 +93,4 @@ class CrystalTasksExecuteService
 
         return CrystalTask::STATE_CRYSTAL_TASK_COMPLETED;
     }
-
 }

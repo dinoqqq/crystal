@@ -15,8 +15,7 @@ class RunningToNewStateChangeStrategy implements StateChangeStrategyInterface
 
     public function __construct(
         CrystalTasksBaseService $crystalTasksBaseService
-    )
-    {
+    ) {
         $this->_crystalTasksBaseService = $crystalTasksBaseService;
     }
 

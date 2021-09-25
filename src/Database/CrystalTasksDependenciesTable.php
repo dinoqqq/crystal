@@ -23,8 +23,7 @@ class CrystalTasksDependenciesTable extends AbstractTable
 
     public function __construct(
         Medoo $database
-    )
-    {
+    ) {
         $this->_database = $database;
     }
 

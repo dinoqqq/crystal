@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Crystal\Database;
-
 
 class AbstractTable
 {

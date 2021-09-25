@@ -2,7 +2,7 @@
 
 namespace Crystal\PriorityStrategy;
 
-
-interface ExtendedPriorityStrategyInterface {
+interface ExtendedPriorityStrategyInterface
+{
     public function getTaskClassesAndGrantedExecutionSlots(int $availableExecutionSlots): ?array;
 }

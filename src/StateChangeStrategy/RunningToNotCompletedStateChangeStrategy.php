@@ -4,7 +4,6 @@ namespace Crystal\StateChangeStrategy;
 
 use Crystal\Crystal;
 use Exception;
-
 use Crystal\Exception\CrystalTaskStateErrorException;
 use Crystal\Entity\CrystalTask;
 

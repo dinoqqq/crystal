@@ -4,7 +4,8 @@ namespace Crystal\Config;
 
 use Crystal\RangeStrategy\RangeStrategyInterface;
 
-interface TaskConfigInterface {
+interface TaskConfigInterface
+{
     public function setClass(string $class): void;
     public function getClass(): string;
 
@@ -23,4 +24,3 @@ interface TaskConfigInterface {
     public function setDependOn(?string $dependOn): void;
     public function getDependOn(): ?string;
 }
-

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Crystal\Heartbeat;
-
 
 use Crystal\MainProcess\MainProcess;
 use Exception;

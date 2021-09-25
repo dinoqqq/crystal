@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Crystal\Container;
-
 
 use Crystal\Config\Config;
 use Crystal\Database\CrystalTasksDependenciesTable;
@@ -32,7 +30,7 @@ class Container implements ContainerInterface
         $this->add(Config::class, $crystalConfig);
 
         $database = Database::getInstance($config);
-        $this->add( Database::class, $database);
+        $this->add(Database::class, $database);
 
         $crystalTasksTable = new CrystalTasksTable($this->get(Database::class));
         $this->add(CrystalTasksTable::class, $crystalTasksTable);
@@ -99,7 +97,4 @@ class Container implements ContainerInterface
     {
         $this->_container[$id] = $service;
     }
-
-
-
 }

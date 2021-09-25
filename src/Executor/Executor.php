@@ -29,8 +29,7 @@ class Executor implements ExecutorInterface
         CrystalTasksExecuteService $crystalTasksExecuteService,
         StateChangeStrategyFactory $stateChangeStrategyFactory,
         CrystalTasksTable $crystalTasksTable
-    )
-    {
+    ) {
         $this->_crystalTasksBaseService = $crystalTasksBaseService;
         $this->_crystalTasksExecuteService = $crystalTasksExecuteService;
         $this->_stateChangeStrategyFactory = $stateChangeStrategyFactory;
@@ -48,8 +47,7 @@ class Executor implements ExecutorInterface
         int $crystalTaskId,
         int $timeout,
         int $cooldown
-    ): bool
-    {
+    ): bool {
         try {
             $this->validateFirstTask();
 
@@ -65,7 +63,6 @@ class Executor implements ExecutorInterface
             $this->_crystalTaskId = $crystalTaskId;
 
             return $this->executeCrystalTask($crystalTaskId, $task);
-
         } catch (Exception $e) {
             Crystal::$logger->error('CRYSTAL-0011: ' . $e->getMessage(), [
                 'data' => [
@@ -260,7 +257,7 @@ class Executor implements ExecutorInterface
     private function setExecuteWallTimeTimeout(): void
     {
         // Also set the time limit to something higher than the timeout, so it will never interfere.
-        set_time_limit(($this->_timeout+$this->_cooldown+1));
+        set_time_limit(($this->_timeout + $this->_cooldown + 1));
 
         // This will make sure this is always called async
         pcntl_async_signals(1);
@@ -280,6 +277,4 @@ class Executor implements ExecutorInterface
         pcntl_signal(SIGALRM, [$this, "crystalTaskExecuteCooldown"]);
         pcntl_alarm($this->_cooldown);
     }
-
-
 }

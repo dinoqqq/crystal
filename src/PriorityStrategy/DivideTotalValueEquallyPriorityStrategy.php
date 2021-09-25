@@ -3,7 +3,6 @@
 namespace Crystal\PriorityStrategy;
 
 use Exception;
-
 use Crystal\Service\CrystalTasksBaseService;
 
 /**
@@ -29,11 +28,10 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
     /**
      * @throws Exception
      */
-    public function __construct( 
+    public function __construct(
         array $config,
         CrystalTasksBaseService $crystalTasksBaseService
-    )
-    {
+    ) {
         $this->_config = $config;
         $this->_crystalTasksBaseService = $crystalTasksBaseService;
 
@@ -73,7 +71,7 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
             if (!array_key_exists($keyName, $array)) {
                 throw new Exception('Key not found in array: "' . $keyName . '"');
             }
-            
+
             $array = $array[$keyName];
         }
     }
@@ -146,7 +144,7 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
 
     private function sortByPriorityHighToLow(array $taskClassesAndPriority): array
     {
-        usort($taskClassesAndPriority, function($a, $b) {
+        usort($taskClassesAndPriority, function ($a, $b) {
             if ($a['priority'] === $b['priority']) {
                 return 0;
             }
@@ -432,7 +430,7 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
 
     private function sortByRemainderGrantedExecutionSlotsHighToLow(array $taskClassesAndPriority): array
     {
-        usort($taskClassesAndPriority, function($a, $b) {
+        usort($taskClassesAndPriority, function ($a, $b) {
             $remainderA = (($a['grantedExecutionSlots'] * 100) % 100);
             $remainderB = (($b['grantedExecutionSlots'] * 100) % 100);
             if ($remainderA === $remainderB) {
@@ -479,7 +477,8 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
     {
         $count = 0;
         foreach ($taskClassesAndPriority as $taskClassAndPriority) {
-            if ($taskClassAndPriority['grantedExecutionSlots'] === 0
+            if (
+                $taskClassAndPriority['grantedExecutionSlots'] === 0
                 || $taskClassAndPriority['grantedExecutionSlots'] === 0.0
             ) {
                 $count++;
@@ -546,17 +545,17 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
 
     private function isLowestRelevantGrantedExecutionSlot(array $taskClassesAndPriority, int $index): bool
     {
-        return !isset($taskClassesAndPriority[$index+1])
-            || $taskClassesAndPriority[$index+1]['grantedExecutionSlots'] === 0
-            || $taskClassesAndPriority[$index+1]['grantedExecutionSlots'] === 0.0
-            || $taskClassesAndPriority[$index+1]['grantedExecutionSlots'] === 1
-            || $taskClassesAndPriority[$index+1]['grantedExecutionSlots'] === 1.0;
+        return !isset($taskClassesAndPriority[$index + 1])
+            || $taskClassesAndPriority[$index + 1]['grantedExecutionSlots'] === 0
+            || $taskClassesAndPriority[$index + 1]['grantedExecutionSlots'] === 0.0
+            || $taskClassesAndPriority[$index + 1]['grantedExecutionSlots'] === 1
+            || $taskClassesAndPriority[$index + 1]['grantedExecutionSlots'] === 1.0;
     }
 
     private function equalsPreviousGrantedExecutionSlot(array $taskClassesAndPriority, int $index): bool
     {
-        return isset($taskClassesAndPriority[$index-1])
-            && (int)$taskClassesAndPriority[$index] === (int)$taskClassesAndPriority[$index-1];
+        return isset($taskClassesAndPriority[$index - 1])
+            && (int)$taskClassesAndPriority[$index] === (int)$taskClassesAndPriority[$index - 1];
     }
 
     private function isFirstGrantedExecutionSlot(int $index): bool
@@ -566,8 +565,8 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
 
     private function greaterThanNextGrantedExecutionSlot(array $taskClassesAndPriority, int $index): bool
     {
-        return isset($taskClassesAndPriority[$index+1]) 
-            && $taskClassesAndPriority[$index]['grantedExecutionSlots'] > $taskClassesAndPriority[$index+1]['grantedExecutionSlots'];
+        return isset($taskClassesAndPriority[$index + 1])
+            && $taskClassesAndPriority[$index]['grantedExecutionSlots'] > $taskClassesAndPriority[$index + 1]['grantedExecutionSlots'];
     }
 
     /**
@@ -581,7 +580,8 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
     private function redistributeLowestGrantedExecutionSlots(array $taskClassesAndPriority): array
     {
         foreach ($taskClassesAndPriority as $key => $taskClassAndPriority) {
-            if ($taskClassAndPriority['grantedExecutionSlots'] === 0
+            if (
+                $taskClassAndPriority['grantedExecutionSlots'] === 0
                 || $taskClassAndPriority['grantedExecutionSlots'] === 0.0
             ) {
                 $taskClassesAndPriority[$key]['grantedExecutionSlots'] = 1;
@@ -593,7 +593,7 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
 
     private function sortByGrantedExecutionSlotsHighToLow(array $taskClassesAndPriority): array
     {
-        usort($taskClassesAndPriority, function($a, $b) {
+        usort($taskClassesAndPriority, function ($a, $b) {
             if ($a['grantedExecutionSlots'] === $b['grantedExecutionSlots']) {
                 return 0;
             }
@@ -625,7 +625,8 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
                 throw new Exception('grantedExecutionSlot is < 0, weird');
             }
 
-            if (!is_int($taskClassAndGrantedExecutionSlots['grantedExecutionSlots'])
+            if (
+                !is_int($taskClassAndGrantedExecutionSlots['grantedExecutionSlots'])
                 && !is_float($taskClassAndGrantedExecutionSlots['grantedExecutionSlots'])
             ) {
                 throw new Exception('grantedExecutionSlot is not an int or float, weird');
@@ -644,5 +645,4 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
         $taskClassAndPriority['done'] = true;
         return $taskClassAndPriority;
     }
-
 }

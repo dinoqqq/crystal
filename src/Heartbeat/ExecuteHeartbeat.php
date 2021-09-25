@@ -27,8 +27,7 @@ class ExecuteHeartbeat implements HeartbeatInterface
         CrystalTasksBaseService $crystalTasksBaseService,
         CrystalTasksExecuteService $crystalTasksExecuteService,
         PriorityStrategyFactory $priorityStrategyFactory
-    )
-    {
+    ) {
         $this->_config = $config;
         $this->_crystalTasksBaseService = $crystalTasksBaseService;
         $this->_crystalTasksExecuteService = $crystalTasksExecuteService;
@@ -193,5 +192,4 @@ class ExecuteHeartbeat implements HeartbeatInterface
     {
         exec($exec);
     }
-
 }

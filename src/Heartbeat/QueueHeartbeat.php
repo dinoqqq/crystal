@@ -4,7 +4,6 @@ namespace Crystal\Heartbeat;
 
 use Crystal\Crystal;
 use Exception;
-
 use Crystal\Exception\CrystalTaskStateErrorException;
 use Crystal\Config\Config;
 use Crystal\Service\CrystalTasksBaseService;
@@ -12,7 +11,8 @@ use Crystal\Service\CrystalTasksQueueService;
 use Crystal\MainProcess\MainProcessInterface;
 use Crystal\Task\TaskInterface;
 
-class QueueHeartbeat implements HeartbeatInterface {
+class QueueHeartbeat implements HeartbeatInterface
+{
 
     private $_config;
     private $_queuer;
@@ -27,8 +27,7 @@ class QueueHeartbeat implements HeartbeatInterface {
         CrystalTasksBaseService $crystalTasksBaseService,
         CrystalTasksQueueService $crystalTasksQueueService,
         QueuerInterface $queuer
-    )
-    {
+    ) {
         $this->_config = $config;
         $this->_crystalTasksBaseService = $crystalTasksBaseService;
         $this->_crystalTasksQueueService = $crystalTasksQueueService;

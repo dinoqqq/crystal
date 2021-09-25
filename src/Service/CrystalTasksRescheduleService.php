@@ -1,9 +1,9 @@
 <?php
+
 namespace Crystal\Service;
 
 use Crystal\Crystal;
 use Exception;
-
 use Crystal\Entity\CrystalTask;
 use Crystal\StateChangeStrategy\StateChangeStrategyFactory;
 
@@ -15,8 +15,7 @@ class CrystalTasksRescheduleService
     public function __construct(
         CrystalTasksBaseService $crystalTasksBaseService,
         StateChangeStrategyFactory $stateChangeStrategyFactory
-    )
-    {
+    ) {
         $this->_crystalTasksBaseService = $crystalTasksBaseService;
         $this->_stateChangeStrategyFactory = $stateChangeStrategyFactory;
     }

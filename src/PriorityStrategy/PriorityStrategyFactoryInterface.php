@@ -2,7 +2,7 @@
 
 namespace Crystal\PriorityStrategy;
 
-interface PriorityStrategyFactoryInterface {
+interface PriorityStrategyFactoryInterface
+{
     public function create(string $className): PriorityStrategyInterface;
 }
-

@@ -5,7 +5,6 @@ namespace Crystal\Executor;
 use Crystal\Database\CrystalTasksTable;
 use Crystal\StateChangeStrategy\StateChangeStrategyFactory;
 use Exception;
-
 use Crystal\Service\CrystalTasksBaseService;
 use Crystal\Service\CrystalTasksExecuteService;
 use Psr\Container\ContainerInterface;
@@ -16,8 +15,7 @@ class ExecutorFactory implements ExecutorFactoryInterface
 
     public function __construct(
         ContainerInterface $container
-    )
-    {
+    ) {
         $this->_container = $container;
     }
 

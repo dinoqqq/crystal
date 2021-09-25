@@ -2,7 +2,7 @@
 
 namespace Crystal\PriorityStrategy;
 
-
-interface PriorityStrategyInterface {
+interface PriorityStrategyInterface
+{
     public function validate(): bool;
 }

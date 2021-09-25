@@ -34,8 +34,7 @@ trait TableTrait
 
     public function get(
         $where = null
-    )
-    {
+    ) {
         $query = 'SELECT ' . $this->escapeTableColumns(self::TABLE_COLUMNS)
             . ' FROM <' . self::TABLE_NAME . '>'
             . ' WHERE ' . $this->whereToQueryString($where);
@@ -110,5 +109,4 @@ trait TableTrait
 
         return implode(' AND ', $predicates);
     }
-
 }
