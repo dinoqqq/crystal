@@ -23,6 +23,7 @@ jobs:
     steps:
       - name: Verify MySQL connection from container
         run: |
+          sudo /etc/init.d/mysql start
           mysql --host localhost --port 32547 -uroot -ppassword -e "CREATE DATABASE test;"
           mysql --host localhost --port 32547 -uroot -ppassword -e "SHOW DATABASES"
           mysql --host localhost --port 32547 -uroot -ppassword test < migration/schema.sql
