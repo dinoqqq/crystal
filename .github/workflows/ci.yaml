@@ -12,23 +12,24 @@ jobs:
         php-versions: [ '7.2', '7.3', '7.4', '8.0' ]
 
     services:
-      mysql:
+      mysqlMysqlHost:
         image: mysql:5.7
         env:
           MYSQL_HOST: 127.0.0.1
           MYSQL_DB: test
           MYSQL_USER: root
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_PASSWORD:
+          MYSQL_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: root
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
         ports:
-          - "3306:3306"
+        - 3306:3306
 
     env:
       DB_DATABASE: test
       DB_USER: root
       DB_PASSWORD: 'root'
       DB_HOST: localhost
-      DATABASE_PORT: 3306
 
     steps:
       - uses: actions/checkout@v2
@@ -42,8 +43,8 @@ jobs:
 
       - run: |
           sudo /etc/init.d/mysql start
-          mysql -e 'CREATE DATABASE test;' -uroot -proot
-          mysql -u root -proot test < migration/schema.sql
+          mysql --host myMysqlHost -e 'CREATE DATABASE test;' -uroot -proot
+          mysql --host myMysqlHost -uroot -proot test < migration/schema.sql
 
       - name: Get composer cache directory
         id: composer-cache
