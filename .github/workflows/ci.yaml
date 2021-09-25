@@ -12,7 +12,7 @@ jobs:
         php-versions: [ '7.2', '7.3', '7.4', '8.0' ]
 
     services:
-      mysqlMysqlHost:
+      myMysqlHost:
         image: mysql:5.7
         env:
           MYSQL_HOST: 127.0.0.1
