@@ -1,8 +1,8 @@
 <?php
 return [
-    'database_name' => '',
-    'username' => '',
-    'password' => '',
+    'database_name' => 'test',
+    'username' => 'root',
+    'password' => 'root',
 
     'database_type' => 'mysql',
     'server' => '127.0.0.1',
