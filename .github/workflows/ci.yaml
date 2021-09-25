@@ -23,9 +23,9 @@ jobs:
     steps:
       - name: Verify MySQL connection from container
         run: |
-          mysql --port 32547 -uroot -ppassword -e "CREATE DATABASE test;"
-          mysql --port 32547 -uroot -ppassword -e "SHOW DATABASES"
-          mysql --port 32547 -uroot -ppassword test < migration/schema.sql
+          mysql --host 127.0.0.1 --port 32547 -uroot -ppassword -e "CREATE DATABASE test;"
+          mysql --host 127.0.0.1 --port 32547 -uroot -ppassword -e "SHOW DATABASES"
+          mysql --host 127.0.0.1 --port 32547 -uroot -ppassword test < migration/schema.sql
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
