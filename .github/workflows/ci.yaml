@@ -12,25 +12,18 @@ jobs:
         php-versions: [ '7.2', '7.3', '7.4', '8.0' ]
 
     services:
-      myMysqlHost:
+      mydb:
         image: mysql:5.7
         env:
-          MYSQL_HOST: 127.0.0.1
-          MYSQL_DB: test
-          MYSQL_USER: root
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_PASSWORD: root
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: password
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
 
-    env:
-      DB_DATABASE: test
-      DB_USER: root
-      DB_PASSWORD: 'root'
-      DB_HOST: localhost
-
     steps:
-      - uses: actions/checkout@v2
+      - name: Verify MySQL connection from container
+        run: |
+          apt-get update
+          apt-get install -y mysql-client
+          mysql --host mydb -uroot -ppassword -e "SHOW DATABASES"
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
@@ -38,11 +31,6 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: pcntl, pdo
           coverage: none
-
-      - run: |
-          apt-get update
-          apt-get install -y mysql-client
-          mysql --host myMysqlHost -uroot -ppassword -e "SHOW DATABASES"
 
       - name: Get composer cache directory
         id: composer-cache
