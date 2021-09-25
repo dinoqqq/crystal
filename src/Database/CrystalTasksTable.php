@@ -359,6 +359,6 @@ class CrystalTasksTable extends AbstractTable
                 . ') as ' . $uniqid;
         }
 
-        return implode($wheres, ' UNION ALL ');
+        return implode(' UNION ALL ', $wheres);
     }
 }
