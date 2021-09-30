@@ -28,7 +28,7 @@ class HashRangeStrategy implements RangeStrategyInterface
     public function validate(array $data): bool
     {
         if (count(array_intersect(array_keys($data), self::MANDATORY_KEYS)) !== count(self::MANDATORY_KEYS)) {
-            throw new Exception('The HashRangeStrategy needs to contain the following keys: ' . implode(self::MANDATORY_KEYS));
+            throw new Exception('The HashRangeStrategy needs to contain the following keys: ' . implode(',', self::MANDATORY_KEYS));
         }
 
         if ($data['resources'] > 16) {

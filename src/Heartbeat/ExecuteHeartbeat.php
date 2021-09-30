@@ -156,7 +156,7 @@ class ExecuteHeartbeat implements HeartbeatInterface
             $phpExecutable = $this->_config->getConfigByKey('phpExecutable');
             $phpExecutableParameters = $this->_config->getConfigByKey('phpExecutableParameters');
             $applicationPhpFile = escapeshellarg($this->_config->getConfigByKey('applicationPhpFile'));
-            $applicationPhpFileParameters = escapeshellarg($this->_config->getConfigByKey('applicationPhpFileParameters'));
+            $applicationPhpFileParameters = $this->_config->getConfigByKey('applicationPhpFileParameters');
 
             $idString  = ' --id=' . escapeshellarg($crystalTask->id);
             $classString  = ' --class=' . escapeshellarg($crystalTask->class);

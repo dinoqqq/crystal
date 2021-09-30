@@ -126,7 +126,7 @@ class TaskConfig implements TaskConfigInterface
     {
         if (count(array_intersect(array_keys($config), self::MANDATORY_KEYS)) !== count(self::MANDATORY_KEYS)) {
             throw new Exception('The task config needs to contain the following keys: '
-                . implode(self::MANDATORY_KEYS, ','));
+                . implode(',', self::MANDATORY_KEYS));
         }
 
         return true;
