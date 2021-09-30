@@ -33,7 +33,7 @@ class Config implements ConfigInterface
         $config = $this->_config;
         if (count(array_intersect(self::MANDATORY_KEYS, array_keys($config))) !== count(self::MANDATORY_KEYS)) {
             throw new Exception('The config needs to contain the following keys: '
-                . implode(self::MANDATORY_KEYS, ','));
+                . implode(',', self::MANDATORY_KEYS));
         }
         if (!is_int($config['maxExecutionSlots'] ?? false)) {
             throw new Exception('Config maxExecutionSlots should be an int');
