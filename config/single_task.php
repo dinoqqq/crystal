@@ -9,7 +9,9 @@ return [
     'phpExecutable' => 'php',
     'phpExecutableParameters' => '-f',
     'applicationPhpFile' => '/foo/bar.php',
-    'applicationPhpFileParameters' => 'crystaltaskexecute',
+    'applicationPhpFileParameters' => [
+        'crystaltaskexecute',
+    ],
     'maxExecutionSlots' => 3,
     'maxErrorTries' => 5,
     'sleepTimeSeconds' => 1,

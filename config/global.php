@@ -21,7 +21,9 @@ return [
     // The php file, that is gonna run the task
     'applicationPhpFile' => '/foo/bar.php',
     // The php file parameters
-    'applicationPhpFileParameters' => 'crystaltaskexecute',
+    'applicationPhpFileParameters' => [
+        'crystaltaskexecute',
+    ],
     // Total number of tasks to be executed simultaneously
     'maxExecutionSlots' => 10,
     // Heartbeat tempo, of queueing/executing/rescheduling new tasks

@@ -153,7 +153,7 @@ class ExecuteHeartbeatTest extends BaseTestApp
         $applicationPhpFile = $this->_crystal->getConfig()->getConfigByKey('applicationPhpFile');
         $applicationPhpFileParameters = $this->_crystal->getConfig()->getConfigByKey('applicationPhpFileParameters');
 
-        $executeString = $phpExecutable . ' ' . $phpExecutableParameters . ' ' . escapeshellarg($applicationPhpFile) . ' ' . escapeshellarg($applicationPhpFileParameters);
+        $executeString = $phpExecutable . ' ' . $phpExecutableParameters . ' ' . escapeshellarg($applicationPhpFile) . ' ' . escapeshellarg($applicationPhpFileParameters[0]);
 
         $this->assertEquals($executeString . " --id='1' --class=" . escapeshellarg($class) . " --range='1'"
             . " --timeout='30' --cooldown='1' 1>/dev/null &",
@@ -187,7 +187,7 @@ class ExecuteHeartbeatTest extends BaseTestApp
         $applicationPhpFile = $this->_crystal->getConfig()->getConfigByKey('applicationPhpFile');
         $applicationPhpFileParameters = $this->_crystal->getConfig()->getConfigByKey('applicationPhpFileParameters');
 
-        $executeString = $phpExecutable . ' ' . $phpExecutableParameters . ' ' . escapeshellarg($applicationPhpFile) . ' ' . escapeshellarg($applicationPhpFileParameters);
+        $executeString = $phpExecutable . ' ' . $phpExecutableParameters . ' ' . escapeshellarg($applicationPhpFile) . ' ' . escapeshellarg($applicationPhpFileParameters[0]);
 
         $this->assertEquals($executeString . " --id='1' --class=" . escapeshellarg($class) . " --range='9'"
             . " --timeout='11' --cooldown='2' 1>/dev/null &",

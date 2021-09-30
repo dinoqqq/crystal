@@ -155,7 +155,13 @@ class ExecuteHeartbeat implements HeartbeatInterface
             $phpExecutable = $this->_config->getConfigByKey('phpExecutable');
             $phpExecutableParameters = $this->_config->getConfigByKey('phpExecutableParameters');
             $applicationPhpFile = escapeshellarg($this->_config->getConfigByKey('applicationPhpFile'));
-            $applicationPhpFileParameters = escapeshellarg($this->_config->getConfigByKey('applicationPhpFileParameters'));
+
+            $applicationPhpFileParametersEscaped = [];
+            foreach($this->_config->getConfigByKey('applicationPhpFileParameters') as $applicationPhpFileParameter) {
+                $applicationPhpFileParametersEscaped[] = escapeshellarg($applicationPhpFileParameter);
+            };
+
+            $applicationPhpFileParametersString = implode(' ', $applicationPhpFileParametersEscaped);
 
             $idString  = ' --id=' . escapeshellarg($crystalTask->id);
             $classString  = ' --class=' . escapeshellarg($crystalTask->class);
@@ -171,8 +177,8 @@ class ExecuteHeartbeat implements HeartbeatInterface
             $outputRedirect = ' 1>/dev/null &';
 
             $exec = $phpExecutable .  ' ' . $phpExecutableParameters . ' ' . $applicationPhpFile . ' '
-                . $applicationPhpFileParameters . $idString . $classString . $rangeString . $timeoutString
-                . $cooldownString . $outputRedirect;
+                . $applicationPhpFileParametersString . $idString . $classString . $rangeString 
+                . $timeoutString . $cooldownString . $outputRedirect;
 
             $this->executePhp($exec);
         } catch (Exception $e) {
