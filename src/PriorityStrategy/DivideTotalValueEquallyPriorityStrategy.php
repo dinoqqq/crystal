@@ -431,8 +431,8 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
     private function sortByRemainderGrantedExecutionSlotsHighToLow(array $taskClassesAndPriority): array
     {
         usort($taskClassesAndPriority, function ($a, $b) {
-            $remainderA = (($a['grantedExecutionSlots'] * 100) % 100);
-            $remainderB = (($b['grantedExecutionSlots'] * 100) % 100);
+            $remainderA = ((int) ($a['grantedExecutionSlots'] * 100) % 100);
+            $remainderB = ((int) ($b['grantedExecutionSlots'] * 100) % 100);
             if ($remainderA === $remainderB) {
                 return 0;
             }
@@ -449,7 +449,7 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
         $sumRemainders = 0;
 
         foreach ($taskClassesAndPriority as $taskClassAndPriority) {
-            $sumRemainders += (($taskClassAndPriority['grantedExecutionSlots'] * 10000) % 10000) / 10000;
+            $sumRemainders += ((int) ($taskClassAndPriority['grantedExecutionSlots'] * 10000) % 10000) / 10000;
         }
 
         // Check if we have a rounding case like "x.9999999", in that case, round up.
