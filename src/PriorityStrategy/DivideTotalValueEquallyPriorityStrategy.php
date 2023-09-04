@@ -454,7 +454,7 @@ class DivideTotalValueEquallyPriorityStrategy implements PriorityStrategyInterfa
 
         // Check if we have a rounding case like "x.9999999", in that case, round up.
 
-        if (($sumRemainders * 10000) % 10000 === 9999) {
+        if ((int) ($sumRemainders * 10000) % 10000 === 9999) {
             $sumRemainders = ceil($sumRemainders);
         }
 
