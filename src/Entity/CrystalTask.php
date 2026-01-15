@@ -194,7 +194,11 @@ class CrystalTask implements EntityInterface
      */
     public function isStateCrystalTaskRunning(): bool
     {
-        $dateStart = (new Datetime())->createFromFormat('Y-m-d H:i:s', $this->date_start);
+        if (empty($this->date_start)) {
+            return false;
+        }
+
+        $dateStart = DateTime::createFromFormat('Y-m-d H:i:s', $this->date_start);
         $dateNow = (new Datetime());
         $period = $this->timeout + $this->cooldown + self::STATE_CRYSTAL_TASK_RUNNING_TO_DEAD_COOLDOWN;
         return !is_null($this->date_start)
@@ -208,7 +212,11 @@ class CrystalTask implements EntityInterface
      */
     public function isStateCrystalTaskDead(): bool
     {
-        $dateStart = (new Datetime())->createFromFormat('Y-m-d H:i:s', $this->date_start);
+        if (empty($this->date_start)) {
+            return false;
+        }
+
+        $dateStart = DateTime::createFromFormat('Y-m-d H:i:s', $this->date_start);
         $dateNow = (new Datetime());
         $period = $this->timeout + $this->cooldown + self::STATE_CRYSTAL_TASK_RUNNING_TO_DEAD_COOLDOWN;
         return !is_null($this->date_start)
@@ -239,7 +247,11 @@ class CrystalTask implements EntityInterface
      */
     public function isStateCrystalTaskDeadAndAfterRescheduleCooldown(): bool
     {
-        $dateStart = (new Datetime())->createFromFormat('Y-m-d H:i:s', $this->date_start);
+        if (empty($this->date_start)) {
+            return false;
+        }
+
+        $dateStart = DateTime::createFromFormat('Y-m-d H:i:s', $this->date_start);
         $dateNow = (new Datetime());
         $period = $this->timeout + $this->cooldown + self::STATE_CRYSTAL_TASK_RUNNING_TO_DEAD_COOLDOWN + self::STATE_CRYSTAL_TASK_RESCHEDULE_COOLDOWN;
         return !is_null($this->date_start)
@@ -255,7 +267,11 @@ class CrystalTask implements EntityInterface
      */
     public function isStateCrystalTaskNotCompletedAndAfterRescheduleCooldown(): bool
     {
-        $dateEnd = (new Datetime())->createFromFormat('Y-m-d H:i:s', $this->date_end);
+        if (empty($this->date_end)) {
+            return false;
+        }
+
+        $dateEnd = DateTime::createFromFormat('Y-m-d H:i:s', $this->date_end);
         $dateNow = (new Datetime());
         $period = self::STATE_CRYSTAL_TASK_RESCHEDULE_COOLDOWN;
         return !is_null($this->date_start)
