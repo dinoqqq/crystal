@@ -25,7 +25,7 @@ class CrystalTasksBaseServiceTest extends BaseTestApp
     /**
      * @throws Exception
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -43,6 +43,7 @@ class CrystalTasksBaseServiceTest extends BaseTestApp
 
     private function createReferenceTable()
     {
+        $this->database->query('DROP TABLE IF EXISTS <account>');
         $this->database->create("account", [
             "id" => [
                 "INT",
@@ -81,7 +82,6 @@ class CrystalTasksBaseServiceTest extends BaseTestApp
      */
     public function testGetByEntityUidAndRangeShouldReturnEmptyObject()
     {
-        $this->truncate(['account']);
         $this->createReferenceTable();
 
         $entityUid = 'account.email';
@@ -98,7 +98,6 @@ class CrystalTasksBaseServiceTest extends BaseTestApp
      */
     public function testGetByEntityUidAndRangeShouldReturnOnlyMatchingWithHash()
     {
-        $this->truncate(['account']);
         $this->createReferenceTable();
         $this->insertEntriesInReferenceTable();
 
@@ -122,7 +121,6 @@ class CrystalTasksBaseServiceTest extends BaseTestApp
      */
     public function testGetByEntityUidAndRangeShouldReturnOnlyTheRightEntry()
     {
-        $this->truncate(['account']);
         $this->createReferenceTable();
         $this->insertEntriesInReferenceTable();
 
@@ -144,7 +142,6 @@ class CrystalTasksBaseServiceTest extends BaseTestApp
      */
     public function testGetByEntityUidAndRangeShouldReturnBothEntries()
     {
-        $this->truncate(['account']);
         $this->createReferenceTable();
         $this->insertEntriesInReferenceTable();
 

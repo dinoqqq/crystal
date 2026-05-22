@@ -38,5 +38,37 @@ To get the tests running follow these steps:
 3. Run `composer update`
 4. Run `/vendor/bin/phpunit`
 
+### Using Docker
+
+A `docker-compose.yml` and `Dockerfile` are included to spin up a MySQL 8.0 instance and a PHP 8.3 CLI container for local development and tests. The schema in `/migration/schema.sql` is loaded automatically on first start.
+
+```bash
+docker compose up -d --build
+```
+
+MySQL is exposed on `127.0.0.1:3306` with:
+
+- Database: `crystal`
+- User / password: `crystal` / `crystal`
+- Root password: `root`
+
+Set these in `/config/database.php`. Use `mysql` as the server when running from inside the PHP container, or `127.0.0.1` when running from the host:
+
+```php
+'database_name' => 'crystal',
+'username'      => 'crystal',
+'password'      => 'crystal',
+'server'        => 'mysql', // or '127.0.0.1' from the host
+```
+
+Run composer and the test suite inside the PHP container:
+
+```bash
+docker compose exec php composer update
+docker compose exec php vendor/bin/phpunit
+```
+
+To stop the containers: `docker compose down`. To also wipe the data volume: `docker compose down -v`.
+
 Read the extended README [here](CRYSTAL.md).
 

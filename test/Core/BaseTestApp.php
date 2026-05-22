@@ -20,7 +20,7 @@ abstract class BaseTestApp extends BaseTest
     /**
      * @throws Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (is_null(self::$_database)) {
             $config = self::getDatabaseConfig();
@@ -29,7 +29,7 @@ abstract class BaseTestApp extends BaseTest
         $this->database = self::$_database;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 

@@ -1,0 +1,40 @@
+services:
+  php:
+    build:
+      context: .
+      args:
+        PHP_VERSION: "8.3"
+    container_name: crystal-php
+    working_dir: /app
+    volumes:
+      - .:/app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    command: tail -f /dev/null
+
+  mysql:
+    image: mysql:8.0
+    container_name: crystal-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: crystal
+      MYSQL_USER: crystal
+      MYSQL_PASSWORD: crystal
+    ports:
+      - "3306:3306"
+    volumes:
+      - crystal-mysql-data:/var/lib/mysql
+      - ./migration/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    command:
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  crystal-mysql-data:

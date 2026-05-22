@@ -15,6 +15,7 @@ use DateTime;
 use DateInterval;
 use Exception;
 use Monolog\Handler\TestHandler;
+use Monolog\Level;
 use Monolog\Logger;
 
 class RescheduleHeartbeatTest extends BaseTestApp
@@ -29,7 +30,7 @@ class RescheduleHeartbeatTest extends BaseTestApp
     /**
      * @throws Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -77,7 +78,7 @@ class RescheduleHeartbeatTest extends BaseTestApp
 
         $this->assertTrue($this->_testHandler->hasRecordThatContains(
             'Rescheduled CrystalTask',
-            Logger::INFO
+            Level::Info
         ));
 
         $this->assertCount(1, $this->_crystalTasksTable->getAll());
@@ -159,7 +160,7 @@ class RescheduleHeartbeatTest extends BaseTestApp
         $this->_rescheduleHeartbeat->rescheduleCrystalTasks();
         $this->assertTrue($this->_testHandler->hasRecordThatContains(
             'Rescheduled CrystalTask',
-            Logger::INFO
+            Level::Info
         ));
 
         $this->assertCount(5, $this->_crystalTasksTable->getAll());
@@ -402,7 +403,7 @@ class RescheduleHeartbeatTest extends BaseTestApp
         $this->_rescheduleHeartbeat->rescheduleCrystalTasks();
         $this->assertTrue($this->_testHandler->hasRecordThatContains(
             'Rescheduled CrystalTask',
-            Logger::INFO
+            Level::Info
         ));
 
         $this->assertCount(10, $this->_crystalTasksTable->getAll());
@@ -523,7 +524,7 @@ class RescheduleHeartbeatTest extends BaseTestApp
 
         $this->assertTrue($this->_testHandler->hasRecordThatContains(
             'Rescheduled CrystalTask',
-            Logger::INFO
+            Level::Info
         ));
 
         $crystalTaskDb1 = $this->_crystalTasksTable->getByPK(1);

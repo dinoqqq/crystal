@@ -14,7 +14,7 @@
         "php": ">=7.2",
         "ext-pcntl": "*",
         "ext-pdo": "*",
-        "monolog/monolog": "^2.2",
+        "monolog/monolog": "^3",
         "catfan/medoo": "^1.7",
         "psr/container": "^1."
     },
@@ -29,7 +29,7 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "6.4.4",
+        "phpunit/phpunit": "^8",
         "phake/phake": "3.*"
     }
 }

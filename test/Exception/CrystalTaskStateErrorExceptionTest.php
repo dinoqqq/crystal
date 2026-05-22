@@ -9,7 +9,7 @@ use Crystal\Test\Core\BaseTestApp;
 
 class CrystalTaskStateErrorExceptionTest extends BaseTestApp
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
