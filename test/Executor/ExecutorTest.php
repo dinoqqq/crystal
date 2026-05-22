@@ -14,6 +14,7 @@ use Crystal\Test\Mock\Task\SuccessTask;
 use DateTime;
 use Exception;
 use Monolog\Handler\TestHandler;
+use Monolog\Level;
 use Monolog\Logger;
 
 class ExecutorTest extends BaseTestApp
@@ -26,7 +27,7 @@ class ExecutorTest extends BaseTestApp
     /**
      * @throws Exception
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -80,7 +81,7 @@ class ExecutorTest extends BaseTestApp
         $this->assertFalse($executor->validatePrepareAndExecuteCrystalTask($successTask, $class, $crystalTaskId, $timeout, $cooldown));
         $this->assertTrue($this->_testHandler->hasRecordThatContains(
             'Trying to executeCrystalTask for the second time, weird',
-            Logger::ERROR
+            Level::Error
         ));
     }
 
@@ -113,7 +114,7 @@ class ExecutorTest extends BaseTestApp
         $this->assertFalse($executor->validatePrepareAndExecuteCrystalTask($successTask, $class, $crystalTaskId, $timeout, $cooldown));
         $this->assertTrue($this->_testHandler->hasRecordThatContains(
             'Request input class and task class do not match, weird',
-            Logger::ERROR
+            Level::Error
         ));
 
         /** @var CrystalTask $crystalTaskDb */

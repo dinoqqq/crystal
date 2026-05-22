@@ -120,6 +120,10 @@ class CrystalTasksTable extends AbstractTable
 
         $ids = array_column($crystalTasks, 'id');
 
+        if (empty($ids)) {
+            return [];
+        }
+
         $where1 = $this->getWhereClauseStateCrystalTaskNew();
         $where2 = ' (<id> IN (' . implode(',', $ids) . ')) ';
         $where = '(' . $where1 . ') AND (' . $where2 . ')';
@@ -352,7 +356,7 @@ class CrystalTasksTable extends AbstractTable
 
             $wheres[] = 'SELECT ' . $uniqid . '.* FROM (
                     SELECT * FROM `crystal_tasks` WHERE ' . $this->getWhereClauseStateCrystalTaskNew()
-                . ' AND `class` = ' . $classEscaped . ' ORDER BY `date_created` ASC LIMIT ' . $normalizedCountEscaped
+                . ' AND `class` = ' . $classEscaped . ' ORDER BY `date_created` ASC, `id` ASC LIMIT ' . $normalizedCountEscaped
                 . ') as ' . $uniqid;
         }
 

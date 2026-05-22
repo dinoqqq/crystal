@@ -1,11 +1,11 @@
 <?php
 return [
-    'database_name' => '',
-    'username' => '',
-    'password' => '',
+    'database_name' => 'crystal',
+    'username' => 'crystal',
+    'password' => 'crystal',
 
     'database_type' => 'mysql',
-    'server' => '127.0.0.1',
+    'server' => 'mysql',
 
     'charset' => 'utf8',
     'collation' => 'utf8_general_ci',

@@ -12,7 +12,7 @@ class ConfigTest extends BaseTestApp
 {
     private $_config;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

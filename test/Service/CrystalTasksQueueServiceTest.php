@@ -27,7 +27,7 @@ class CrystalTasksQueueServiceTest extends BaseTestApp
     /**
      * @throws Exception
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

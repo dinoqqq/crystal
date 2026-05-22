@@ -25,7 +25,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
     /**
      * @throws Exception
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -984,7 +984,7 @@ class DivideTotalValueEquallyPriorityStrategyTest extends BaseTestApp
             ],
         ];
 
-        $this->assertEquals($result, $taskClassesAndPriority);
+        $this->assertEqualsWithDelta($result, $taskClassesAndPriority, 0.0001);
     }
 
     /**

@@ -10,7 +10,7 @@ class HashRangeStrategyTest extends BaseTest
 {
     private $_hashRangeStrategy;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->_hashRangeStrategy = new HashRangeStrategy();
